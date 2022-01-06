@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_7/constants.dart';
+import 'package:flutter_application_7/screens/home/home_screen.dart';
 import 'package:flutter_application_7/screens/login_register/register/registerpage.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -114,7 +115,9 @@ class _LoginPageState extends State<LoginPage> {
                                 backgroundColor: MaterialStateProperty.all(Colors.lightGreen.withOpacity(0.7),
                                 ),
                                 ),
-                            onPressed: () {},
+                            onPressed: () => Navigator.push(
+                              context,
+                             MaterialPageRoute(builder: (context)=> HomeScreen())),
                             child: const Text(
                               "Đăng Nhập",
                               style: TextStyle(color: Colors.white),
@@ -133,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: const Text(
                             'Tạo tài khoản mới ',
                             style: TextStyle(
-                              color: Colors.lightGreen,
+                              color: kTextColor,
                             ),
                           ),
                           ),
@@ -141,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () {}, child: const Text(
                             'Quên mật khẩu ',
                             style: TextStyle(
-                              color: Colors.lightGreen,
+                              color: kTextColor,
                             ),
                           ),),
                     ],

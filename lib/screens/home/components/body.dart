@@ -249,12 +249,11 @@ class Body extends StatefulWidget {
               itemCount:productapi.products.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisSpacing: kDefaultPaddin,
+                mainAxisSpacing: kDefaultPaddin/2,
+                crossAxisSpacing: kDefaultPaddin/2,
                 childAspectRatio: 0.75,
               ),
-              itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.all(kDefaultPaddin),
-                    child: ItemCard(
+              itemBuilder: (context, index) =>  ItemCard(
                       product: productapi.products[index],
                       press: () => Navigator.push(
                         context,
@@ -266,7 +265,6 @@ class Body extends StatefulWidget {
                       ),
                     ),
                   )),
-        ),
       ],
     );
   }
