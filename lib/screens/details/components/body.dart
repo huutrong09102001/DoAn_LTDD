@@ -18,7 +18,7 @@ class Body extends StatelessWidget {
             child: Container(
               child: AspectRatio(
                 aspectRatio: 1,
-                child: Image.network(product.imageUrl),
+                child: Image.network("http://192.168.1.7:8000/storage/"+product.imageUrl),
                 ),
             ),
           ),

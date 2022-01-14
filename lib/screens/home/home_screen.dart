@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_7/api/sanpham.dart';
 import 'package:flutter_application_7/constants.dart';
 import 'package:flutter_application_7/models/Product.dart';
 import 'package:flutter_application_7/screens/accounts/user_info/TTCN.dart';
 import 'package:flutter_application_7/screens/blog/blog.dart';
+import 'package:flutter_application_7/screens/details/details_screen.dart';
 import 'package:flutter_application_7/screens/home/components/body.dart';
 import 'package:flutter_application_7/screens/cart/cart_shop.dart';
 import 'package:flutter_application_7/screens/notify/notify.dart';
 import 'package:flutter_application_7/screens/accounts/user_info/TTTK.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -15,9 +18,12 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
   class _HomeScreenState extends State<HomeScreen> {
+   
   int pageIndex =0;
   @override
   Widget build(BuildContext context) {
+    
+     
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: kBackgroundColor,
@@ -99,41 +105,18 @@ class HomeScreen extends StatefulWidget {
       ),
       actions: <Widget>[
         
-                Center(
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(left: 60, right: 50),
-                    height: 35,
-                    width: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: kTextColor , width: 1)
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: kDefaultPaddin),
-                      child: TextField(
-                        onChanged: (value) {},
-                        decoration: InputDecoration(
-                          hintText: 'Nhập từ khóa cần tìm ...',
-                          hintStyle: TextStyle(
-                            color: kTextColor.withOpacity(0.5),
-                          ),
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          suffixIcon: IconButton(
-                          splashRadius: 15,
-                            icon: Icon(
+                IconButton(
+                          splashRadius: 20,
+                            icon: const Icon(
                               Icons.search,
                               color: kTextColor,
                             ),
-                            onPressed: (){},
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),  
+                            onPressed: (){
+                              showSearch(context: context,
+                               delegate: CustomSearch(),
+                               );
+                            },
+                          ),  
               Row(
                   children: <Widget>[
                     IconButton(
@@ -144,7 +127,7 @@ class HomeScreen extends StatefulWidget {
                            builder: (context) => CartShop(),
                            ),
                         ),
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.shopping_cart,
                         size: 30.0,
                         color: kTextColor,
@@ -155,7 +138,7 @@ class HomeScreen extends StatefulWidget {
                       child: IconButton(
                         splashRadius: 20,
                         onPressed: () {},
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.chat,
                           size: 30.0,
                           color: kTextColor,
@@ -166,5 +149,108 @@ class HomeScreen extends StatefulWidget {
                 ),
       ],
     );
+    
+  }
+}
+
+class CustomSearch extends SearchDelegate {
+  
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    
+    return [
+      IconButton(
+        onPressed: (){
+          query ="";
+        },
+         icon: const Icon(Icons.clear),
+         ),
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      onPressed: (){
+        close(context, null);
+      }, 
+      icon: const Icon(Icons.arrow_back),
+      );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    var productapi = Provider.of<NetWorkReQuest> (context ,
+     listen: false );
+    List<Product> matchQuery = [];
+    for(var item in  productapi.products)
+    {
+      if(item.name.toLowerCase().contains(query.toLowerCase()))
+      {
+        matchQuery.add(item);
+      }
+    }
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (context , index) {
+        var result = matchQuery[index];
+        return ListTile(
+          title :TextButton(
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder:(context)=>DetailsScreen(product: matchQuery[index]),
+                ),
+              );
+            },
+            child: Text(
+              result.name,
+              style: TextStyle(
+                fontSize: 17,
+                color:  kTextColor,
+              ),
+              ),
+          )
+        );
+      }
+      );
+  }
+  
+  @override
+  Widget buildResults(BuildContext context) {
+     var productapi = Provider.of<NetWorkReQuest> (context ,
+     listen: false );
+     List<Product> matchQuery = [];
+    for(var item in  productapi.products)
+    {
+      if(item.name.toLowerCase().contains(query.toLowerCase()))
+      {
+        matchQuery.add(item);
+      }
+    }
+   return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (context , index) {
+        var result = matchQuery[index];
+        return ListTile(
+          title : TextButton(
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder:(context)=>DetailsScreen(product: matchQuery[index]),
+                ),
+              );
+            },
+            child: Text(
+              result.name,
+              style: TextStyle(
+                fontSize: 20,
+                
+              ),
+            ),
+          )
+        );
+      }
+      );
   }
 }

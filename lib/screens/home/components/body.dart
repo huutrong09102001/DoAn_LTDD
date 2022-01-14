@@ -61,7 +61,12 @@ class Body extends StatefulWidget {
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                       ),
-                      onPressed: (){},
+                      onPressed: ()=>Navigator.push(
+                        context,
+                         MaterialPageRoute(
+                           builder: (context) => ProductsScreen(providerId: 1)
+                           ),
+                           ),
                       child: Container(
                         width: 50,
                         height: 30,
@@ -80,7 +85,12 @@ class Body extends StatefulWidget {
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                       ),
-                      onPressed: (){},
+                      onPressed: ()=>Navigator.push(
+                        context,
+                         MaterialPageRoute(
+                           builder: (context) => ProductsScreen(providerId: 3)
+                           ),
+                           ),
                       child: Container(
                         width: 50,
                         height: 30,
@@ -99,7 +109,12 @@ class Body extends StatefulWidget {
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                       ),
-                      onPressed: (){},
+                      onPressed: ()=>Navigator.push(
+                        context,
+                         MaterialPageRoute(
+                           builder: (context) => ProductsScreen(providerId: 2)
+                           ),
+                           ),
                       child: Container(
                         width: 50,
                         height: 30,
@@ -118,7 +133,12 @@ class Body extends StatefulWidget {
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                       ),
-                      onPressed: (){},
+                      onPressed: ()=>Navigator.push(
+                        context,
+                         MaterialPageRoute(
+                           builder: (context) => ProductsScreen(providerId: 4)
+                           ),
+                           ),
                       child: Container(
                         width: 50,
                         height: 30,
@@ -226,7 +246,7 @@ class Body extends StatefulWidget {
                     ),
                     onPressed: () => Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ProductsScreen()),
+                      MaterialPageRoute(builder: (context) => ProductsScreen(providerId: 0)),
                     ),
                     child: Text(
                       "Xem tất cả",

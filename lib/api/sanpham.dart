@@ -12,7 +12,7 @@ static List<Product> parseProducts(String response) {
 Future<void> fetchProducts() async { 
   
   List<Product> product2 = [];
-  var url = "http://192.168.1.7:8000/api/sanpham/danhsach";
+  var url = "http://192.168.1.7:8000/api/product/danhsach";
    http.Response response = await  http.get(Uri.parse(url)); 
    if (response.statusCode == 200) { 
      dynamic jsondata = json.decode(response.body);
@@ -24,7 +24,7 @@ Future<void> fetchProducts() async {
       throw Exception('Unable to fetch products from the REST API');
    } 
    products = product2;
-
+   print(products[0].imageUrl);
    notifyListeners();
 } 
 }

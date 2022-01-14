@@ -6,16 +6,53 @@ import 'package:flutter_application_7/screens/cart/cart_shop.dart';
 import 'package:flutter_application_7/screens/details/details_screen.dart';
 import 'package:provider/provider.dart';
 
-class Body extends StatefulWidget {
-  @override
-  _BodyState createState() => _BodyState();
-}
+class Body extends StatelessWidget {
+  final int Id;
 
-class _BodyState extends State<Body> {
-  List<Product> datalist = [];
+   const Body({Key? key, required this.Id}) : super(key: key);
+  
+
   @override
   Widget build(BuildContext context) {
     var productapi = Provider.of<NetWorkReQuest>(context, listen: false);
+    List<Product> productByProviderId = [];
+    if(Id == 0)
+    {
+      productByProviderId = productapi.products;
+    }
+    else if(Id == 1)
+    {
+      for(var item in productapi.products)
+      {
+        if(item.providerId ==1)
+        productByProviderId.add(item);
+      }
+    }
+    if(Id == 4)
+    {
+      for(var item in productapi.products)
+      {
+        if(item.providerId ==4)
+        productByProviderId.add(item);
+      }
+    }
+    if(Id == 2)
+    {
+      for(var item in productapi.products)
+      {
+        if(item.providerId ==2)
+        productByProviderId.add(item);
+      }
+    }
+    if(Id == 3)
+    {
+      for(var item in productapi.products)
+      {
+        if(item.providerId ==3)
+        productByProviderId.add(item);
+      }
+    }
+    
     return ListView(
       children: <Widget>[
         //Categories(),
@@ -30,7 +67,7 @@ class _BodyState extends State<Body> {
               builder: (context, AsyncSnapshot snapshot) {
                 return GridView.builder(
                   shrinkWrap: true,
-                  itemCount: productapi.products.length,
+                  itemCount: productByProviderId.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: kDefaultPaddin / 2,
@@ -38,12 +75,12 @@ class _BodyState extends State<Body> {
                     childAspectRatio: 0.75,
                   ),
                   itemBuilder: (context, index) => ItemCard(
-                    product: productapi.products[index],
+                    product: productByProviderId[index],
                     press: () => Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => DetailsScreen(
-                                product: productapi.products[index],
+                                product: productByProviderId[index],
                               )),
                     ),
                   ),
@@ -94,7 +131,7 @@ class ItemCard extends StatelessWidget {
                             
                             borderRadius: BorderRadius.circular(16),
                             image: DecorationImage(
-                              image: NetworkImage(product!.imageUrl),
+                              image: NetworkImage("http://192.168.1.7:8000/storage/"+product!.imageUrl),
                               fit: BoxFit.cover,
                             ),
                           ),
