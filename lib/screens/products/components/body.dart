@@ -4,12 +4,15 @@ import 'package:flutter_application_7/constants.dart';
 import 'package:flutter_application_7/models/Product.dart';
 import 'package:flutter_application_7/screens/cart/cart_shop.dart';
 import 'package:flutter_application_7/screens/details/details_screen.dart';
+import 'package:flutter_application_7/screens/products/products_screen.dart';
 import 'package:provider/provider.dart';
 
 class Body extends StatelessWidget {
   final int Id;
+  final String categories;
+  final int selected;
 
-   const Body({Key? key, required this.Id}) : super(key: key);
+   const Body({Key? key, required this.Id , required this.categories, required this.selected}) : super(key: key);
   
 
   @override
@@ -55,7 +58,25 @@ class Body extends StatelessWidget {
     
     return ListView(
       children: <Widget>[
-        //Categories(),
+        Categories(selected: selected,),
+        Container(
+          width: 50,
+          height: 30,
+          decoration: BoxDecoration(
+            color: Colors.lightGreen,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 5 , left : 170),
+            child: Text(
+              categories,
+              style: TextStyle(
+                fontSize: 20,
+                color : Colors.yellow,
+                fontWeight: FontWeight.bold
+              ),
+            ),
+          ),
+        ),
         SizedBox(
           width: 260,
           height: 600,
@@ -131,7 +152,7 @@ class ItemCard extends StatelessWidget {
                             
                             borderRadius: BorderRadius.circular(16),
                             image: DecorationImage(
-                              image: NetworkImage("http://192.168.1.7:8000/storage/"+product!.imageUrl),
+                              image: NetworkImage("http://192.168.1.6:8000/storage/"+product!.imageUrl),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -214,31 +235,61 @@ class ItemCard extends StatelessWidget {
 }
 
 class Categories extends StatefulWidget {
+   final int selected;
+
+  const Categories({Key? key, required this.selected}) : super(key: key);
   @override
   _CategoriesState createState() => _CategoriesState();
 }
 
 class _CategoriesState extends State<Categories> {
-  List<String> categories = ["Tất cả", "Samsung", "Iphone", "Oppo", "Xiaomi"];
-  int selectedIndex = 0;
+  List<String> categories = ["Tất cả", "Iphone", "Samsung", "Xiaomi", "Oppo"];
+
   @override
   Widget build(BuildContext context) {
+    int selectedIndex = widget.selected;
     return SizedBox(
       height: 30,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
-        itemBuilder: (context, index) => buildCategories(index),
+        itemBuilder: (context, index) => buildCategories(index,selectedIndex),
       ),
     );
   }
 
-  Widget buildCategories(int index) {
+  Widget buildCategories(int index , int selectedIndex) {
     return GestureDetector(
       onTap: () {
         setState(() {
           selectedIndex = index;
         });
+        var categories ="";
+        if(index == 0)
+        {
+          categories = "Tất cả sản phẩm";
+        }
+        else if (index ==1)
+        {
+          categories = "Iphone";
+        }
+        else if (index ==2)
+        {
+          categories = "Samsung";
+        }
+        else if (index ==3)
+        {
+          categories = "Xiaomi";
+        }
+        else if (index ==4)
+        {
+          categories = "Oppo";
+        }
+        Navigator.push(
+          context,
+           MaterialPageRoute(builder: (context)=> ProductsScreen(providerId: index, Categories:categories ,selected: selectedIndex,)
+           ),
+           );
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin / 4),

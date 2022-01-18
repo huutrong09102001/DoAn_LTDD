@@ -3,7 +3,9 @@ import 'package:flutter_application_7/constants.dart';
 import 'package:flutter_application_7/screens/products/components/body.dart'; 
 class ProductsScreen extends StatelessWidget{
   final int  providerId;
-  const ProductsScreen({Key? key , required this.providerId}) : super(key: key);
+  final String Categories;
+  final int selected;
+  const ProductsScreen({Key? key , required this.providerId , required this.Categories , required this.selected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class ProductsScreen extends StatelessWidget{
             ),
           ),
         ),
-        body: Body(Id:providerId),
+        body: Body(Id:providerId , categories: Categories,selected: selected,),
       ),
     ) ;
   }

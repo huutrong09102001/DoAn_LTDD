@@ -64,7 +64,7 @@ class Body extends StatefulWidget {
                       onPressed: ()=>Navigator.push(
                         context,
                          MaterialPageRoute(
-                           builder: (context) => ProductsScreen(providerId: 1)
+                           builder: (context) => ProductsScreen(providerId: 1 , Categories: "Iphone",selected: 1,)
                            ),
                            ),
                       child: Container(
@@ -88,7 +88,7 @@ class Body extends StatefulWidget {
                       onPressed: ()=>Navigator.push(
                         context,
                          MaterialPageRoute(
-                           builder: (context) => ProductsScreen(providerId: 3)
+                           builder: (context) => ProductsScreen(providerId: 3 ,Categories: "Xiaomi",selected: 3,)
                            ),
                            ),
                       child: Container(
@@ -112,7 +112,7 @@ class Body extends StatefulWidget {
                       onPressed: ()=>Navigator.push(
                         context,
                          MaterialPageRoute(
-                           builder: (context) => ProductsScreen(providerId: 2)
+                           builder: (context) => ProductsScreen(providerId: 2 ,Categories: "Samsung",selected: 2,)
                            ),
                            ),
                       child: Container(
@@ -136,7 +136,7 @@ class Body extends StatefulWidget {
                       onPressed: ()=>Navigator.push(
                         context,
                          MaterialPageRoute(
-                           builder: (context) => ProductsScreen(providerId: 4)
+                           builder: (context) => ProductsScreen(providerId: 4,Categories: "Oppo",selected: 2,)
                            ),
                            ),
                       child: Container(
@@ -160,7 +160,7 @@ class Body extends StatefulWidget {
               padding: const EdgeInsets.symmetric(
                   vertical: kDefaultPaddin, horizontal: kDefaultPaddin),
               child: Text(
-                'Sản phẩm nổi bật',
+                'Sản phẩm  mới nhất',
                 style: TextStyle(
                   color: kTextColor,
                   fontWeight: FontWeight.bold,
@@ -177,7 +177,12 @@ class Body extends StatefulWidget {
                     style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(Colors.lightGreen),
                     ),
-                    onPressed: () {},
+                    onPressed: () => Navigator.push(
+                      context,
+                       MaterialPageRoute(
+                         builder: (context) => ProductsScreen(providerId: 0 , Categories: "Tất cả sản phẩm",selected: 0,)
+                         ),
+                       ),
                     child: Text(
                       "Xem tất cả",
                       style: TextStyle(
@@ -195,11 +200,11 @@ class Body extends StatefulWidget {
           height: 260,
           width: 500,
           child: FutureBuilder(
-              future: productapi.fetchProducts(),
+              future: productapi.ProductByDate(),
               builder: (context, AsyncSnapshot snapshot) { 
                 return GridView.builder(
               shrinkWrap: true,
-              itemCount: productapi.products.length,
+              itemCount: productapi.productByDate.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: kDefaultPaddin/2,
@@ -207,12 +212,12 @@ class Body extends StatefulWidget {
                 childAspectRatio: 0.75,
               ),
               itemBuilder: (context, index) =>  ItemCard(
-                      product: productapi.products[index],
+                      product: productapi.productByDate[index],
                       press: () => Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => DetailsScreen(
-                                  product: productapi.products[index],
+                                  product: productapi.productByDate[index],
                                 )),
                       ),
                     ),
@@ -221,7 +226,7 @@ class Body extends StatefulWidget {
               }
           ),
         ),
-        Row(
+        /* Row(
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -260,8 +265,8 @@ class Body extends StatefulWidget {
               ),
             ),
           ],
-        ),
-        SizedBox(
+        ), */
+        /* SizedBox(
           height: 260,
           width: 500,
           child: GridView.builder(
@@ -284,7 +289,7 @@ class Body extends StatefulWidget {
                                 ),
                       ),
                     ),
-                  )),
+                  )), */
       ],
     );
   }
