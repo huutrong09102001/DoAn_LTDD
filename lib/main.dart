@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_application_7/api/account.dart';
 import 'package:flutter_application_7/api/sanpham.dart';
 import 'package:flutter_application_7/constants.dart';
 import 'package:flutter_application_7/models/Cart.dart';
@@ -11,7 +11,8 @@ import 'package:flutter_application_7/screens/login_register/login/login_screen.
 import 'package:provider/provider.dart';
 void main() {
   runApp(MultiProvider(providers:[
-    ChangeNotifierProvider(create: (context) => NetWorkReQuest())
+    ChangeNotifierProvider(create: (context) => NetWorkReQuest(),),
+    ChangeNotifierProvider(create:(context)=> AccountReQuest(),)
   ],
   child:  const MyApp(),
   ));

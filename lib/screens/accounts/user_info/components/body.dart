@@ -1,11 +1,14 @@
 
+import 'package:flutter_application_7/models/Account.dart';
 import 'package:flutter_application_7/screens/accounts/user_info/TTTK.dart';
 import 'package:flutter_application_7/screens/accounts/orders/DHCT.dart';
 import 'package:flutter_application_7/screens/accounts/address/DCCT.dart';
 import 'package:flutter/material.dart';
 
-
 class Body extends StatelessWidget {
+  final List<Account> account;
+
+  const Body({Key? key,required this.account}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -15,12 +18,8 @@ class Body extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  Image.asset(
-                    'assets/images/HuChong.jpg',
-                    fit: BoxFit.cover,
-                    height: 100,
-                  ),
-                  Text("Nguyen A"),
+                  Container(),
+                  Text(account[0].fullname),
                   Text("030003030303"),
                 ],
               ),
@@ -33,7 +32,7 @@ class Body extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => TTTKScreen(),
+                  builder: (context) => TTTKScreen(acccount: account,),
                 ));
           },
           child: Padding(

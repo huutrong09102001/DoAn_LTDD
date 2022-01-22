@@ -1,8 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_7/models/Account.dart';
 
 class BodyTK extends StatelessWidget {
+  final List<Account> account;
+
+  const BodyTK({Key? key, required this.account}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,7 +47,7 @@ class BodyTK extends StatelessWidget {
               children: <Widget>[
                 Text("Tên"),
                 Spacer(),
-                Text('Nguyen A'),
+                Text(account[0].fullname),
                 Icon(Icons.arrow_forward_ios)
               ],
             ),
@@ -58,7 +62,7 @@ class BodyTK extends StatelessWidget {
               children: <Widget>[
                 Text("Tên đăng nhập"),
                 Spacer(),
-                Text('nguyena'),
+                Text(account[0].username),
                 Icon(Icons.arrow_forward_ios)
               ],
             ),
@@ -73,7 +77,7 @@ class BodyTK extends StatelessWidget {
               children: <Widget>[
                 Text("Giới tính"),
                 Spacer(),
-                Text('Nam'),
+                Text(account[0].sex),
                 Icon(Icons.arrow_forward_ios)
               ],
             ),
@@ -88,7 +92,7 @@ class BodyTK extends StatelessWidget {
               children: <Widget>[
                 Text("Số điện thoại"),
                 Spacer(),
-                Text('03030303011'),
+                Text(account[0].phone),
                 Icon(Icons.arrow_forward_ios)
               ],
             ),
@@ -103,7 +107,7 @@ class BodyTK extends StatelessWidget {
               children: <Widget>[
                 Text("Email"),
                 Spacer(),
-                Text('  nguyena@gmail.com'),
+                Text(account[0].email),
                 Icon(Icons.arrow_forward_ios)
               ],
             ),

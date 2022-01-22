@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_7/api/sanpham.dart';
 import 'package:flutter_application_7/constants.dart';
+import 'package:flutter_application_7/models/Account.dart';
 import 'package:flutter_application_7/models/Product.dart';
 import 'package:flutter_application_7/screens/accounts/user_info/TTCN.dart';
 import 'package:flutter_application_7/screens/blog/blog.dart';
@@ -12,7 +13,8 @@ import 'package:flutter_application_7/screens/accounts/user_info/TTTK.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  final List<Account> account;
+  HomeScreen({Key? key , required this.account}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -33,7 +35,7 @@ class HomeScreen extends StatefulWidget {
     );
   }
 
-  BottomNavigationBar buildBottomNavigationBar(BuildContext context) {
+  BottomNavigationBar buildBottomNavigationBar(BuildContext context ) {
     return BottomNavigationBar(
       selectedItemColor: Colors.lightGreen,
       backgroundColor: kBackgroundColor,
@@ -59,7 +61,7 @@ class HomeScreen extends StatefulWidget {
                }
                if(index == 3)
                {
-                 return TTCNScreen();
+                 return TTCNScreen(account:widget.account,);
                }
                return Body();
 
@@ -182,6 +184,7 @@ class CustomSearch extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     var productapi = Provider.of<NetWorkReQuest> (context ,
      listen: false );
+      
     List<Product> matchQuery = [];
     for(var item in  productapi.products)
     {

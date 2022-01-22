@@ -1,3 +1,6 @@
+
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_7/api/sanpham.dart';
 import 'package:flutter_application_7/constants.dart';
@@ -148,12 +151,18 @@ class ItemCard extends StatelessWidget {
                           padding: EdgeInsets.all(kDefaultPaddin/4),
                           height: 150,
                           width: 300,
-                          decoration: BoxDecoration(
-                            
+                          decoration: BoxDecoration(                        
                             borderRadius: BorderRadius.circular(16),
-                            image: DecorationImage(
-                              image: NetworkImage("http://192.168.1.6:8000/storage/"+product!.imageUrl),
-                              fit: BoxFit.cover,
+                            
+                          ),
+                          child: CachedNetworkImage(
+                            imageUrl:  "http://192.168.1.6:8000/storage/" + product!.imageUrl,
+                            fit: BoxFit.fill,
+                            placeholder: (context , url ) => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            errorWidget: (context , url , error) => Container(
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -253,12 +262,12 @@ class _CategoriesState extends State<Categories> {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
-        itemBuilder: (context, index) => buildCategories(index,selectedIndex),
+        itemBuilder: (context, index) => buildCategories(index,selectedIndex , context),
       ),
     );
   }
 
-  Widget buildCategories(int index , int selectedIndex) {
+  Widget buildCategories(int index , int selectedIndex ,BuildContext context) {
     return GestureDetector(
       onTap: () {
         setState(() {

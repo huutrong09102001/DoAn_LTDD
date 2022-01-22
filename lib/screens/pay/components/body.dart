@@ -82,7 +82,7 @@ class Body extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: kDefaultPaddin/2),
                   child: Text(
-                    accounts[1].address,
+                    'Temp',
                     style: TextStyle(
                       fontSize: 15,
                       color: kTextColor,
@@ -103,7 +103,7 @@ class Body extends StatelessWidget {
                             padding:
                                 const EdgeInsets.only(left: kDefaultPaddin / 2),
                             child: Text(
-                              accounts[1].fullname + "  |",
+                              'temp' + "  |",
                               style: TextStyle(
                                 fontSize: 15,
                                 color: kTextColor,
@@ -125,7 +125,7 @@ class Body extends StatelessWidget {
                               padding:
                                   const EdgeInsets.only(left: kDefaultPaddin / 2),
                               child: Text(
-                                accounts[1].phone,
+                                "temp",
                                 style: TextStyle(
                                   fontSize: 15,
                                   color: kTextColor,
