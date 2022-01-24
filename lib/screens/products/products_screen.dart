@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_7/constants.dart';
+import 'package:flutter_application_7/models/Account.dart';
+import 'package:flutter_application_7/screens/home/home_screen.dart';
 import 'package:flutter_application_7/screens/products/components/body.dart'; 
 class ProductsScreen extends StatelessWidget{
   final int  providerId;
   final String Categories;
   final int selected;
-  const ProductsScreen({Key? key , required this.providerId , required this.Categories , required this.selected}) : super(key: key);
+  final List<Account> account;
+  const ProductsScreen({Key? key , required this.providerId , required this.Categories , required this.selected , required this.account}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +53,7 @@ class ProductsScreen extends StatelessWidget{
             ),
           ),
         ),
-        body: Body(Id:providerId , categories: Categories,selected: selected,),
+        body: Body(Id:providerId , categories: Categories,selected: selected,account: account,),
       ),
     ) ;
   }
@@ -64,7 +67,7 @@ class ProductsScreen extends StatelessWidget{
                   color: kTextColor,
                   size: 20.0,
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeScreen(account: account,)), (route) => false),
         ),
         actions: <Widget>[
           IconButton(

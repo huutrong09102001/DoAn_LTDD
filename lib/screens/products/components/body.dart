@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_7/api/sanpham.dart';
 import 'package:flutter_application_7/constants.dart';
+import 'package:flutter_application_7/models/Account.dart';
 import 'package:flutter_application_7/models/Product.dart';
 import 'package:flutter_application_7/screens/cart/cart_shop.dart';
 import 'package:flutter_application_7/screens/details/details_screen.dart';
@@ -14,8 +15,8 @@ class Body extends StatelessWidget {
   final int Id;
   final String categories;
   final int selected;
-
-   const Body({Key? key, required this.Id , required this.categories, required this.selected}) : super(key: key);
+  final List<Account> account;
+   const Body({Key? key, required this.Id , required this.categories, required this.selected, required this.account}) : super(key: key);
   
 
   @override
@@ -61,7 +62,7 @@ class Body extends StatelessWidget {
     
     return ListView(
       children: <Widget>[
-        Categories(selected: selected,),
+        Categories(selected: selected, account:account,),
         Container(
           width: 50,
           height: 30,
@@ -245,8 +246,8 @@ class ItemCard extends StatelessWidget {
 
 class Categories extends StatefulWidget {
    final int selected;
-
-  const Categories({Key? key, required this.selected}) : super(key: key);
+   final List<Account> account;
+  const Categories({Key? key, required this.selected , required this.account}) : super(key: key);
   @override
   _CategoriesState createState() => _CategoriesState();
 }
@@ -262,12 +263,12 @@ class _CategoriesState extends State<Categories> {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
-        itemBuilder: (context, index) => buildCategories(index,selectedIndex , context),
+        itemBuilder: (context, index) => buildCategories(index,selectedIndex , context  ,widget.account),
       ),
     );
   }
 
-  Widget buildCategories(int index , int selectedIndex ,BuildContext context) {
+  Widget buildCategories(int index , int selectedIndex ,BuildContext context , var account) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -296,7 +297,7 @@ class _CategoriesState extends State<Categories> {
         }
         Navigator.push(
           context,
-           MaterialPageRoute(builder: (context)=> ProductsScreen(providerId: index, Categories:categories ,selected: selectedIndex,)
+           MaterialPageRoute(builder: (context)=> ProductsScreen(providerId: index, Categories:categories ,selected: selectedIndex, account:account,)
            ),
            );
       },

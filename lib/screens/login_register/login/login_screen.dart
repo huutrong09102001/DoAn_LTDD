@@ -181,8 +181,7 @@ class _LoginPageState extends State<LoginPage> {
   {
     Map<String ,String > data ={
       '_username' : usernameController.text,
-      '_password'  : passwordController.text,
-      
+      '_password'  : passwordController.text, 
     };
     List<Account> res = await AccountReQuest.login(data);
     if( res.length == 1)

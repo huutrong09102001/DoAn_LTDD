@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   final List<Account> account;
+ 
   HomeScreen({Key? key , required this.account}) : super(key: key);
 
   @override
@@ -30,9 +31,25 @@ class HomeScreen extends StatefulWidget {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: buildAppBar(context),
-      body: Body(),
+      body: Body(account: widget.account,),
       bottomNavigationBar: buildBottomNavigationBar(context),
     );
+
+  }
+  AnimatedBuilder buildAnimation(Widget widget , var animation) {
+    return AnimatedBuilder(
+      child: widget,
+      animation:animation ,
+      builder: (context , child){
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: Offset(1, 0),
+            end: Offset(0,0),
+            ).animate(animation),
+            child: child,
+          );
+      },
+      );
   }
 
   BottomNavigationBar buildBottomNavigationBar(BuildContext context ) {
@@ -49,7 +66,7 @@ class HomeScreen extends StatefulWidget {
              pageBuilder: (context ,animation ,second){
                if (index == 0)
                {
-               return Body();
+               return buildAnimation(widget, animation);
                }
                if(index == 1)
                {
@@ -61,9 +78,9 @@ class HomeScreen extends StatefulWidget {
                }
                if(index == 3)
                {
-                 return TTCNScreen(account:widget.account,);
+                 return TTCNScreen(account:widget.account,animation: animation,);
                }
-               return Body();
+               return buildAnimation(widget, animation);
 
              },
            ),

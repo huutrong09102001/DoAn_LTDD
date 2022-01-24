@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_7/constants.dart';
+import 'package:flutter_application_7/models/Account.dart';
 import 'package:flutter_application_7/models/Product.dart';
 import 'package:flutter_application_7/api/sanpham.dart';
 import 'package:flutter_application_7/screens/details/details_screen.dart';
@@ -10,7 +11,9 @@ import 'package:provider/provider.dart';
 
 
 class Body extends StatefulWidget {
-  
+  final List<Account> account;
+
+  const Body({Key? key,required this.account}) : super(key: key);
   @override
   _BodyState createState() => _BodyState();
 }
@@ -64,7 +67,7 @@ class Body extends StatefulWidget {
                       onPressed: ()=>Navigator.push(
                         context,
                          MaterialPageRoute(
-                           builder: (context) => ProductsScreen(providerId: 1 , Categories: "Iphone",selected: 1,)
+                           builder: (context) => ProductsScreen(providerId: 1 , Categories: "Iphone",selected: 1,account: widget.account,)
                            ),
                            ),
                       child: Container(
@@ -88,7 +91,7 @@ class Body extends StatefulWidget {
                       onPressed: ()=>Navigator.push(
                         context,
                          MaterialPageRoute(
-                           builder: (context) => ProductsScreen(providerId: 3 ,Categories: "Xiaomi",selected: 3,)
+                           builder: (context) => ProductsScreen(providerId: 3 ,Categories: "Xiaomi",selected: 3,account: widget.account,)
                            ),
                            ),
                       child: Container(
@@ -112,7 +115,7 @@ class Body extends StatefulWidget {
                       onPressed: ()=>Navigator.push(
                         context,
                          MaterialPageRoute(
-                           builder: (context) => ProductsScreen(providerId: 2 ,Categories: "Samsung",selected: 2,)
+                           builder: (context) => ProductsScreen(providerId: 2 ,Categories: "Samsung",selected: 2,account: widget.account,)
                            ),
                            ),
                       child: Container(
@@ -136,7 +139,7 @@ class Body extends StatefulWidget {
                       onPressed: ()=>Navigator.push(
                         context,
                          MaterialPageRoute(
-                           builder: (context) => ProductsScreen(providerId: 4,Categories: "Oppo",selected: 2,)
+                           builder: (context) => ProductsScreen(providerId: 4,Categories: "Oppo",selected: 2,account: widget.account,)
                            ),
                            ),
                       child: Container(
@@ -180,7 +183,7 @@ class Body extends StatefulWidget {
                     onPressed: () => Navigator.push(
                       context,
                        MaterialPageRoute(
-                         builder: (context) => ProductsScreen(providerId: 0 , Categories: "Tất cả sản phẩm",selected: 0,)
+                         builder: (context) => ProductsScreen(providerId: 0 , Categories: "Tất cả sản phẩm",selected: 0,account: widget.account,)
                          ),
                        ),
                     child: Text(
