@@ -34,7 +34,6 @@ static String host = "http://192.168.1.7:8000/api/";
   
 }
 
-
 static Future SingUp (var data ) async {
   String url = host + "account/signup";
  var response = await http.post(Uri.parse(url),
