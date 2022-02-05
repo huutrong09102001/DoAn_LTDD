@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_7/models/Product.dart';
 import 'package:flutter_application_7/constants.dart';
@@ -18,7 +19,16 @@ class Body extends StatelessWidget {
             child: Container(
               child: AspectRatio(
                 aspectRatio: 1,
-                child: Image.network("http://192.168.1.6:8000/storage/"+product.imageUrl),
+                child: CachedNetworkImage(
+                            imageUrl:  "http://192.168.1.7:8000/storage/" + product.imageUrl,
+                            fit: BoxFit.fill,
+                            placeholder: (context , url ) => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            errorWidget: (context , url , error) => Container(
+                              color: Colors.white,
+                            ),
+                          ),
                 ),
             ),
           ),

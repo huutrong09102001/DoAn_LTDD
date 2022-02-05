@@ -1,5 +1,4 @@
 
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_7/api/sanpham.dart';
@@ -11,58 +10,66 @@ import 'package:flutter_application_7/screens/details/details_screen.dart';
 import 'package:flutter_application_7/screens/products/products_screen.dart';
 import 'package:provider/provider.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   final int Id;
   final String categories;
   final int selected;
   final List<Account> account;
-   const Body({Key? key, required this.Id , required this.categories, required this.selected, required this.account}) : super(key: key);
-  
-
+  final List<Product> product;
+   const Body({Key? key, required this.Id , required this.categories, required this.selected, required this.account , required this.product}) : super(key: key);
+  @override
+  _BodyState createState() => _BodyState();
+}
+class _BodyState extends State<Body>{
+  var isDescending = false;
   @override
   Widget build(BuildContext context) {
+    
+   
     var productapi = Provider.of<NetWorkReQuest>(context, listen: false);
     List<Product> productByProviderId = [];
-    if(Id == 0)
+    if(widget.Id == 0)
     {
-      productByProviderId = productapi.products;
+      productByProviderId = widget.product;
     }
-    else if(Id == 1)
+    else if(widget.Id == 1)
     {
-      for(var item in productapi.products)
+      for(var item in widget.product)
       {
         if(item.providerId ==1)
         productByProviderId.add(item);
       }
     }
-    if(Id == 4)
+    if(widget.Id == 4)
     {
-      for(var item in productapi.products)
+      for(var item in widget.product)
       {
         if(item.providerId ==4)
         productByProviderId.add(item);
       }
     }
-    if(Id == 2)
+    if(widget.Id == 2)
     {
-      for(var item in productapi.products)
+      for(var item in widget.product)
       {
         if(item.providerId ==2)
         productByProviderId.add(item);
       }
     }
-    if(Id == 3)
+    if(widget.Id == 3)
     {
-      for(var item in productapi.products)
+      for(var item in widget.product)
       {
         if(item.providerId ==3)
         productByProviderId.add(item);
       }
     }
     
+  
+    
     return ListView(
       children: <Widget>[
-        Categories(selected: selected, account:account,),
+        Categories(selected: widget.selected, account:widget.account, product: widget.product,),
         Container(
           width: 50,
           height: 30,
@@ -72,13 +79,42 @@ class Body extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(top: 5 , left : 170),
             child: Text(
-              categories,
+              widget.categories,
               style: TextStyle(
                 fontSize: 20,
                 color : Colors.yellow,
                 fontWeight: FontWeight.bold
               ),
             ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin/4),
+          child: Row(
+            children: [
+              Container(
+                width:  50,
+                height: 30,
+                child: Icon(Icons.filter_list_outlined),
+              ),
+              ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    isDescending = !isDescending;
+                  });
+                  print(isDescending);              
+                },
+                 child: Row(
+                  children: [
+                    Text(
+                      isDescending ? "Giá thấp dần" : "Giá tăng dần",
+                    ),
+                    Icon(Icons.compare_arrows)
+                  ],
+                 ), 
+              ),
+                   
+            ],
           ),
         ),
         SizedBox(
@@ -92,15 +128,17 @@ class Body extends StatelessWidget {
               builder: (context, AsyncSnapshot snapshot) {
                 return GridView.builder(
                   shrinkWrap: true,
-                  itemCount: productByProviderId.length,
+                  itemCount:  productByProviderId.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    mainAxisSpacing: kDefaultPaddin / 2,
-                    crossAxisSpacing: kDefaultPaddin / 2,
-                    childAspectRatio: 0.75,
+                    mainAxisSpacing: kDefaultPaddin / 4,
+                    crossAxisSpacing: kDefaultPaddin / 4,
+                    childAspectRatio: 0.8,
                   ),
-                  itemBuilder: (context, index) => ItemCard(
-                    product: productByProviderId[index],
+                  itemBuilder: (context, index) {
+                    final sortItem = isDescending ? productByProviderId.reversed.toList() : productByProviderId;
+                    return ItemCard(
+                    product: sortItem[index],
                     press: () => Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -108,7 +146,8 @@ class Body extends StatelessWidget {
                                 product: productByProviderId[index],
                               )),
                     ),
-                  ),
+                  );
+                  }
                 );
               },
             ),
@@ -133,6 +172,8 @@ class ItemCard extends StatelessWidget {
     return GestureDetector(
       onTap: press,
       child: Container(
+        height: 150,
+        
         decoration: BoxDecoration(
             border: Border.all(color: kTextColor, width: 2),
             borderRadius: BorderRadius.circular(12)),
@@ -141,23 +182,23 @@ class ItemCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-              height: 218,
+              height: 200,
               child: Column(
                 children: [
                   SizedBox(
-                    height: 200,
+                    height: 166,
                     child: Column(
                       children: [
                         Container(
                           padding: EdgeInsets.all(kDefaultPaddin/4),
-                          height: 150,
+                          height: 120,
                           width: 300,
                           decoration: BoxDecoration(                        
                             borderRadius: BorderRadius.circular(16),
                             
                           ),
                           child: CachedNetworkImage(
-                            imageUrl:  "http://192.168.1.6:8000/storage/" + product!.imageUrl,
+                            imageUrl:  "http://192.168.1.7:8000/storage/" + product!.imageUrl,
                             fit: BoxFit.fill,
                             placeholder: (context , url ) => const Center(
                               child: CircularProgressIndicator(),
@@ -169,7 +210,7 @@ class ItemCard extends StatelessWidget {
                         ),
                         Padding(
                     padding:
-                        const EdgeInsets.symmetric(vertical: kDefaultPaddin / 4),
+                        const EdgeInsets.symmetric(vertical:5),
                     child: Text(
                       product!.name,
                       style: TextStyle(
@@ -213,7 +254,7 @@ class ItemCard extends StatelessWidget {
                   ),
                   child: Padding(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 4),
+                        const EdgeInsets.only(left: 3),
                     child: Row(
                       children: <Widget>[
                         Text(
@@ -247,28 +288,30 @@ class ItemCard extends StatelessWidget {
 class Categories extends StatefulWidget {
    final int selected;
    final List<Account> account;
-  const Categories({Key? key, required this.selected , required this.account}) : super(key: key);
+   final List<Product> product;
+  const Categories({Key? key, required this.selected , required this.account , required this.product}) : super(key: key);
   @override
   _CategoriesState createState() => _CategoriesState();
 }
 
 class _CategoriesState extends State<Categories> {
-  List<String> categories = ["Tất cả", "Iphone", "Samsung", "Xiaomi", "Oppo"];
+  List<String> categories = ["Tất cả", "Iphone", "Samsung", "Xiaomi", "oppo"];
 
   @override
   Widget build(BuildContext context) {
     int selectedIndex = widget.selected;
     return SizedBox(
       height: 30,
+      width : 250,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
-        itemBuilder: (context, index) => buildCategories(index,selectedIndex , context  ,widget.account),
+        itemBuilder: (context, index) => buildCategories(index,selectedIndex , context  ,widget.account ,widget.product ),
       ),
     );
   }
 
-  Widget buildCategories(int index , int selectedIndex ,BuildContext context , var account) {
+  Widget buildCategories(int index , int selectedIndex ,BuildContext context , var account , var product) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -277,7 +320,7 @@ class _CategoriesState extends State<Categories> {
         var categories ="";
         if(index == 0)
         {
-          categories = "Tất cả sản phẩm";
+          categories = "Tất cả";
         }
         else if (index ==1)
         {
@@ -297,8 +340,8 @@ class _CategoriesState extends State<Categories> {
         }
         Navigator.push(
           context,
-           MaterialPageRoute(builder: (context)=> ProductsScreen(providerId: index, Categories:categories ,selected: selectedIndex, account:account,)
-           ),
+          MaterialPageRoute(builder: (context )=> ProductsScreen(providerId: index, Categories:categories ,selected: selectedIndex, account:account, product: product ,)),
+          
            );
       },
       child: Padding(
@@ -307,6 +350,9 @@ class _CategoriesState extends State<Categories> {
           child: Container(
             width: 70,
             height: 50,
+            decoration: BoxDecoration(
+              border: Border.symmetric(vertical: BorderSide(color: kTextColor , width: 1))
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

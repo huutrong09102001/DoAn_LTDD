@@ -23,6 +23,7 @@ class Body extends StatefulWidget {
   Widget build(BuildContext context) {
     var productapi = Provider.of<NetWorkReQuest> (context ,
      listen: false );
+     List<Product> productbyAPI = productapi.products;
     Size size = MediaQuery.of(context).size;
     return ListView(
     
@@ -67,7 +68,7 @@ class Body extends StatefulWidget {
                       onPressed: ()=>Navigator.push(
                         context,
                          MaterialPageRoute(
-                           builder: (context) => ProductsScreen(providerId: 1 , Categories: "Iphone",selected: 1,account: widget.account,)
+                           builder: (context) => ProductsScreen(providerId: 1 , Categories: "Iphone",selected: 1,account: widget.account,product:productbyAPI,)
                            ),
                            ),
                       child: Container(
@@ -91,9 +92,11 @@ class Body extends StatefulWidget {
                       onPressed: ()=>Navigator.push(
                         context,
                          MaterialPageRoute(
-                           builder: (context) => ProductsScreen(providerId: 3 ,Categories: "Xiaomi",selected: 3,account: widget.account,)
+                           builder: (context) =>ProductsScreen(providerId: 3 ,Categories: "Xiaomi",selected: 3,account: widget.account , product: productbyAPI,)
+                         ),
+                           
                            ),
-                           ),
+      
                       child: Container(
                         width: 50,
                         height: 30,
@@ -115,7 +118,7 @@ class Body extends StatefulWidget {
                       onPressed: ()=>Navigator.push(
                         context,
                          MaterialPageRoute(
-                           builder: (context) => ProductsScreen(providerId: 2 ,Categories: "Samsung",selected: 2,account: widget.account,)
+                           builder: (context) => ProductsScreen(providerId: 2 ,Categories: "Samsung",selected: 2,account: widget.account,product: productbyAPI,)
                            ),
                            ),
                       child: Container(
@@ -139,7 +142,7 @@ class Body extends StatefulWidget {
                       onPressed: ()=>Navigator.push(
                         context,
                          MaterialPageRoute(
-                           builder: (context) => ProductsScreen(providerId: 4,Categories: "Oppo",selected: 2,account: widget.account,)
+                           builder: (context) => ProductsScreen(providerId: 4,Categories: "Oppo",selected: 2,account: widget.account, product: productbyAPI,)
                            ),
                            ),
                       child: Container(
@@ -183,7 +186,7 @@ class Body extends StatefulWidget {
                     onPressed: () => Navigator.push(
                       context,
                        MaterialPageRoute(
-                         builder: (context) => ProductsScreen(providerId: 0 , Categories: "Tất cả sản phẩm",selected: 0,account: widget.account,)
+                         builder: (context) => ProductsScreen(providerId: 0 , Categories: "Tất cả sản phẩm",selected: 0,account: widget.account,product: productbyAPI,)
                          ),
                        ),
                     child: Text(
@@ -200,8 +203,8 @@ class Body extends StatefulWidget {
           ],
         ),
         SizedBox(
-          height: 260,
-          width: 500,
+          height: 300,
+          width: 300,
           child: FutureBuilder(
               future: productapi.ProductByDate(),
               builder: (context, AsyncSnapshot snapshot) { 
@@ -210,9 +213,9 @@ class Body extends StatefulWidget {
               itemCount: productapi.productByDate.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisSpacing: kDefaultPaddin/2,
-                crossAxisSpacing: kDefaultPaddin/2,
-                childAspectRatio: 0.75,
+                mainAxisSpacing: kDefaultPaddin/4,
+                crossAxisSpacing: kDefaultPaddin/4,
+                childAspectRatio: 0.83,
               ),
               itemBuilder: (context, index) =>  ItemCard(
                       product: productapi.productByDate[index],

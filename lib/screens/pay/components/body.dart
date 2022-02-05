@@ -82,7 +82,7 @@ class Body extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: kDefaultPaddin/2),
                   child: Text(
-                    'Temp',
+                    'Mai Chi Tho . Q2 , TPHCm',
                     style: TextStyle(
                       fontSize: 15,
                       color: kTextColor,
@@ -103,7 +103,7 @@ class Body extends StatelessWidget {
                             padding:
                                 const EdgeInsets.only(left: kDefaultPaddin / 2),
                             child: Text(
-                              'temp' + "  |",
+                              'Lê Hữu Trọng' + "  |",
                               style: TextStyle(
                                 fontSize: 15,
                                 color: kTextColor,
@@ -125,7 +125,7 @@ class Body extends StatelessWidget {
                               padding:
                                   const EdgeInsets.only(left: kDefaultPaddin / 2),
                               child: Text(
-                                "temp",
+                                "0345643567",
                                 style: TextStyle(
                                   fontSize: 15,
                                   color: kTextColor,
@@ -238,4 +238,22 @@ class DetailOrderItem extends StatelessWidget {
       ),
     );
   }
+
+  /* Future createInvoice() async
+  {
+    Map<String ,String > data ={
+      '_accountId' =>  : 
+      '_password'  :  
+    };
+    List<Account> res = await AccountReQuest.login(data);
+    if( res.length == 1)
+    {
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen(account: res,)));
+      
+    }
+    else
+    {
+      print("Khong thanh cong");
+    }
+  } */
 }

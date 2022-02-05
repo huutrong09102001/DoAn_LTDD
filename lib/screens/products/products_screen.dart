@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_7/constants.dart';
 import 'package:flutter_application_7/models/Account.dart';
+import 'package:flutter_application_7/models/Product.dart';
 import 'package:flutter_application_7/screens/home/home_screen.dart';
 import 'package:flutter_application_7/screens/products/components/body.dart'; 
 class ProductsScreen extends StatelessWidget{
@@ -8,7 +9,9 @@ class ProductsScreen extends StatelessWidget{
   final String Categories;
   final int selected;
   final List<Account> account;
-  const ProductsScreen({Key? key , required this.providerId , required this.Categories , required this.selected , required this.account}) : super(key: key);
+  final List<Product> product;
+  
+  const ProductsScreen({Key? key , required this.providerId , required this.Categories , required this.selected , required this.account , required this.product }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,13 +56,17 @@ class ProductsScreen extends StatelessWidget{
             ),
           ),
         ),
-        body: Body(Id:providerId , categories: Categories,selected: selected,account: account,),
-      ),
-    ) ;
+        body: Body(Id:providerId , categories: Categories,selected: selected,account: account,product:product,)
+        ),
+      );
   }
+
+
+  
  AppBar buildAppBar(BuildContext context){
   return AppBar(
-        backgroundColor: Colors.white,
+        
+        backgroundColor: Colors.greenAccent,
         elevation: 0,
         leading: IconButton(
           icon: Icon(
@@ -91,5 +98,4 @@ class ProductsScreen extends StatelessWidget{
 
   );
 }
-
 }
