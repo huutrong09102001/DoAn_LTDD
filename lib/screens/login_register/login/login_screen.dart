@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_7/api/sanpham.dart';
 import 'package:flutter_application_7/constants.dart';
 import 'package:flutter_application_7/api/account.dart';
 import 'package:flutter_application_7/models/Account.dart';
 import 'package:flutter_application_7/screens/home/home_screen.dart';
 import 'package:flutter_application_7/screens/login_register/register/registerpage.dart';
+import 'package:provider/provider.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -22,6 +24,10 @@ class _LoginPageState extends State<LoginPage> {
   bool showPass1 = true;
   @override
   Widget build(BuildContext context) {
+    var productapi = Provider.of<NetWorkReQuest> (context ,
+     listen: false );
+     productapi.ProductByDate();
+     productapi.fetchProducts();
     return Scaffold(
       backgroundColor: kBackgroundColor ,
       body: SingleChildScrollView(

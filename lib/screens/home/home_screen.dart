@@ -110,7 +110,7 @@ class HomeScreen extends StatefulWidget {
     );
   }
 
-  AppBar buildAppBar(BuildContext context) {
+  AppBar buildAppBar(BuildContext context ) {
     return AppBar(
       elevation: 0,
       backgroundColor:kBackgroundColor,
@@ -132,7 +132,7 @@ class HomeScreen extends StatefulWidget {
                             ),
                             onPressed: (){
                               showSearch(context: context,
-                               delegate: CustomSearch(),
+                               delegate: CustomSearch(widget.account[0].id),
                                );
                             },
                           ),  
@@ -143,7 +143,7 @@ class HomeScreen extends StatefulWidget {
                       onPressed: () => Navigator.push(
                         context,
                          MaterialPageRoute(
-                           builder: (context) => CartShop(),
+                           builder: (context) => CartShop(accountId: widget.account[0].id,),
                            ),
                         ),
                       icon: const Icon(
@@ -173,7 +173,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class CustomSearch extends SearchDelegate {
-  
+   final int accountId;
+
+  CustomSearch(this.accountId);
   @override
   List<Widget>? buildActions(BuildContext context) {
     
@@ -198,7 +200,7 @@ class CustomSearch extends SearchDelegate {
   }
 
   @override
-  Widget buildSuggestions(BuildContext context) {
+  Widget buildSuggestions(BuildContext context ,  ) {
     var productapi = Provider.of<NetWorkReQuest> (context ,
      listen: false );
       
@@ -219,7 +221,7 @@ class CustomSearch extends SearchDelegate {
             onPressed: (){
               Navigator.push(
                 context,
-                MaterialPageRoute(builder:(context)=>DetailsScreen(product: matchQuery[index]),
+                MaterialPageRoute(builder:(context)=>DetailsScreen(product: matchQuery[index] , accountId: accountId, ),
                 ),
               );
             },
@@ -257,7 +259,7 @@ class CustomSearch extends SearchDelegate {
             onPressed: (){
               Navigator.push(
                 context,
-                MaterialPageRoute(builder:(context)=>DetailsScreen(product: matchQuery[index]),
+                MaterialPageRoute(builder:(context)=>DetailsScreen(product: matchQuery[index] , accountId: accountId,),
                 ),
               );
             },

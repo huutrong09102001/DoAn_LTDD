@@ -24,6 +24,8 @@ class Body extends StatefulWidget {
     var productapi = Provider.of<NetWorkReQuest> (context ,
      listen: false );
      List<Product> productbyAPI = productapi.products;
+     productapi.fetchProducts();
+     productapi.ProductByDate();
     Size size = MediaQuery.of(context).size;
     return ListView(
     
@@ -223,9 +225,11 @@ class Body extends StatefulWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => DetailsScreen(
+                              accountId: widget.account[0].id,
                                   product: productapi.productByDate[index],
                                 )),
                       ),
+                      accountId: widget.account[0].id,
                     ),
                   );
                   

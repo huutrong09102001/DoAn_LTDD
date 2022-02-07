@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_7/api/invoice.dart';
 import 'package:flutter_application_7/constants.dart';
 import 'package:flutter_application_7/models/Account.dart';
 import 'package:flutter_application_7/models/Cart.dart';
 import 'package:flutter_application_7/screens/accounts/address/DCCT.dart';
 
 class Body extends StatelessWidget {
+  final int subToTal ;
+  final int accountId;
+  const Body({Key? key, required this.subToTal , required this.accountId}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -169,8 +174,9 @@ class Body extends StatelessWidget {
         ),
       );
   }
-}
 
+  
+}
 class DetailOrderItem extends StatelessWidget {
   const DetailOrderItem({
     Key? key,
@@ -239,21 +245,5 @@ class DetailOrderItem extends StatelessWidget {
     );
   }
 
-  /* Future createInvoice() async
-  {
-    Map<String ,String > data ={
-      '_accountId' =>  : 
-      '_password'  :  
-    };
-    List<Account> res = await AccountReQuest.login(data);
-    if( res.length == 1)
-    {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen(account: res,)));
-      
-    }
-    else
-    {
-      print("Khong thanh cong");
-    }
-  } */
+  
 }

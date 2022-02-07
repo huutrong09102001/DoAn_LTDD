@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_7/constants.dart';
+import 'package:flutter_application_7/models/Account.dart';
 import 'package:flutter_application_7/models/Product.dart';
 import 'package:flutter_application_7/screens/details/components/body.dart';
 import 'package:flutter_application_7/screens/cart/cart_shop.dart';
@@ -7,8 +8,8 @@ import 'package:flutter_application_7/screens/pay/pay_screen.dart';
 
 class DetailsScreen extends StatelessWidget{
   final Product product;
-
-  const DetailsScreen({Key? key, required this.product}) : super(key: key);
+  final int accountId;
+  const DetailsScreen({Key? key, required this.product , required this.accountId}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,11 +29,7 @@ class DetailsScreen extends StatelessWidget{
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(kDetailColor),
                           ),
-                          onPressed: ()=> Navigator.push(
-                            context,
-                             MaterialPageRoute(builder: (context) => CartShop()
-                             ),
-                             ),
+                          onPressed: (){},
                            child: Padding(
                              padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin/2),
                              child: Row(
@@ -65,7 +62,7 @@ class DetailsScreen extends StatelessWidget{
                           ),
                           onPressed: ()=> Navigator.push(
                             context,
-                             MaterialPageRoute(builder: (context) => PayScreen()
+                             MaterialPageRoute(builder: (context) => PayScreen(accountId: accountId,)
                              ),
                              ),
                            child: Padding(
@@ -75,6 +72,7 @@ class DetailsScreen extends StatelessWidget{
                                  Text(
                                    "Mua ngay",
                                    style: TextStyle(
+
                                      color: Colors.white,
                                      fontWeight: FontWeight.bold,
                                    ),

@@ -27,6 +27,7 @@ class _BodyState extends State<Body>{
     
    
     var productapi = Provider.of<NetWorkReQuest>(context, listen: false);
+    productapi.fetchProducts();
     List<Product> productByProviderId = [];
     if(widget.Id == 0)
     {
@@ -143,9 +144,11 @@ class _BodyState extends State<Body>{
                       context,
                       MaterialPageRoute(
                           builder: (context) => DetailsScreen(
+                            accountId: widget.account[0].id,
                                 product: productByProviderId[index],
                               )),
                     ),
+                    accountId: widget.account[0].id,
                   );
                   }
                 );
@@ -161,10 +164,12 @@ class _BodyState extends State<Body>{
 class ItemCard extends StatelessWidget {
   final Product? product;
   final Function()? press;
+  final int  accountId;
   const ItemCard({
     Key? key,
     this.product,
     this.press,
+     required this.accountId,
   }) : super(key: key);
 
   @override
@@ -249,7 +254,7 @@ class ItemCard extends StatelessWidget {
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CartShop(),
+                      builder: (context) => CartShop(accountId: accountId,),
                     ),
                   ),
                   child: Padding(

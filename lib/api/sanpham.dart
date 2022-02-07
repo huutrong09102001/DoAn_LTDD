@@ -26,7 +26,7 @@ static String host = "http://192.168.1.7:8000/api/";
       throw Exception('Unable to fetch products from the REST API');
    } 
    products = product2;
-  
+   print(products.length);
    notifyListeners();
 }
 Future<void> ProductByDate() async { 

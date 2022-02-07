@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_7/screens/pay/pay_screen.dart';
 
 class CartShop extends StatefulWidget {
-  const CartShop({Key? key}) : super(key: key);
+  final int accountId;
+  const CartShop({Key? key , required this.accountId}) : super(key: key);
   @override
   _CartShopState createState() => _CartShopState();
 }
@@ -143,7 +144,7 @@ class _CartShopState extends State<CartShop> {
             ),
             ElevatedButton(onPressed: ()=> Navigator.push(
               context,
-               MaterialPageRoute(builder: (context)=> PayScreen())
+               MaterialPageRoute(builder: (context)=> PayScreen(accountId:  widget.accountId,))
               ), 
             child: const Text("Thanh Toan"),
             ),

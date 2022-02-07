@@ -27,7 +27,8 @@ class Product {
      required this.pin,
      required this.imageUrl,
      required this.date,
-      this.providerId});
+      this.providerId
+      });
 
   Product.fromJson(Map<String, dynamic> json) : 
     id = json['id'],
