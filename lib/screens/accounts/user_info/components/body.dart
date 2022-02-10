@@ -53,7 +53,7 @@ class Body extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DHCTScreen(),
+                  builder: (context) => DHCTScreen(account:account ,),
                 ));
           },
           child: Padding(

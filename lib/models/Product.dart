@@ -1,33 +1,33 @@
 
 class Product {
-  int? id;
-  late String name;
-  late String description;
-  int? price;
-  int? quantity;
-  int? status;
-  late String screen;
-   late String  ram;
-  late String  rom;
- late String pin;
- late String imageUrl;
-  late String date;
-  int? providerId;
+  int id;
+   String name;
+   String description;
+  int price;
+  int  quantity;
+  int  status;
+   String screen;
+    String  ram;
+   String  rom;
+  String pin;
+ String imageUrl;
+   
+  int providerId;
 
   Product(
-      {this.id,
+      { required this.id,
      required this.name,
      required this.description,
-      this.price,
-      this.quantity,
-      this.status,
+      required  this.price,
+      required  this.quantity,
+      required  this.status,
      required this.screen,
      required this.ram,
      required this.rom,
      required this.pin,
      required this.imageUrl,
-     required this.date,
-      this.providerId
+     
+       required this.providerId
       });
 
   Product.fromJson(Map<String, dynamic> json) : 
@@ -42,7 +42,7 @@ class Product {
     rom = json['rom'],
     pin = json['pin'],
     imageUrl = json['imageUrl'],
-    date = json['date'],
+    
     providerId = json['providerId'];
 
 
@@ -59,7 +59,7 @@ class Product {
     data['rom'] = this.rom;
     data['pin'] = this.pin;
     data['imageUrl'] = this.imageUrl;
-    data['date'] = this.date;
+   
     data['providerId'] = this.providerId;
     return data;
   }

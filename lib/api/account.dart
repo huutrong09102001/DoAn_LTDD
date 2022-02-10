@@ -7,7 +7,7 @@ static List<Account> parseProducts(String response) {
    var  parsed = json.decode(response) as List<dynamic>;
    return parsed.map<Account>((json) => Account.fromJson(json)).toList(); 
 }
-static String host = "http://192.168.1.7:8000/api/";
+static String host = "http://192.168.1.9:8000/api/";
  
  static Future<List<Account>>   login (var data  ) async {
   List<Account> acc = [];

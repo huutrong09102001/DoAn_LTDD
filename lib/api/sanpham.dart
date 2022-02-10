@@ -7,7 +7,7 @@ static List<Product> parseProducts(String response) {
    var  parsed = json.decode(response) as List<dynamic>;
    return parsed.map<Product>((json) => Product.fromJson(json)).toList(); 
 } 
-static String host = "http://192.168.1.7:8000/api/";
+static String host = "http://192.168.1.9:8000/api/";
   List<Product> products = [];
   List<Product> productByDate = [];
   

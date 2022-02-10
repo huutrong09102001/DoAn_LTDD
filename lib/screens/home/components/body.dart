@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_7/api/invoice.dart';
 import 'package:flutter_application_7/constants.dart';
 import 'package:flutter_application_7/models/Account.dart';
 import 'package:flutter_application_7/models/Product.dart';
@@ -26,6 +27,13 @@ class Body extends StatefulWidget {
      List<Product> productbyAPI = productapi.products;
      productapi.fetchProducts();
      productapi.ProductByDate();
+
+     var invoiceapi = Provider.of<InvoiceReQuest>(context, listen: false);
+    Map<String, String> data = {
+      '_accountId': widget.account[0].id.toString(),
+    };
+    invoiceapi.getInvoiceListByAccountId(data);
+    
     Size size = MediaQuery.of(context).size;
     return ListView(
     

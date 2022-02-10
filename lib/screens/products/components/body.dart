@@ -145,7 +145,7 @@ class _BodyState extends State<Body>{
                       MaterialPageRoute(
                           builder: (context) => DetailsScreen(
                             accountId: widget.account[0].id,
-                                product: productByProviderId[index],
+                                product: sortItem[index],
                               )),
                     ),
                     accountId: widget.account[0].id,
@@ -203,7 +203,7 @@ class ItemCard extends StatelessWidget {
                             
                           ),
                           child: CachedNetworkImage(
-                            imageUrl:  "http://192.168.1.7:8000/storage/" + product!.imageUrl,
+                            imageUrl:  "http://192.168.1.9:8000/storage/" + product!.imageUrl,
                             fit: BoxFit.fill,
                             placeholder: (context , url ) => const Center(
                               child: CircularProgressIndicator(),
