@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import '../models/Account.dart';
+import 'package:flutter_application_7/constants.dart';
+
 class AccountReQuest extends ChangeNotifier{
 static List<Account> parseProducts(String response) { 
    var  parsed = json.decode(response) as List<dynamic>;
    return parsed.map<Account>((json) => Account.fromJson(json)).toList(); 
 }
-static String host = "http://192.168.1.9:8000/api/";
+
  
  static Future<List<Account>>   login (var data  ) async {
   List<Account> acc = [];

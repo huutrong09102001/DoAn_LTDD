@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import '../models/Product.dart';
+import 'package:flutter_application_7/constants.dart';
+
 class NetWorkReQuest extends ChangeNotifier{
 static List<Product> parseProducts(String response) { 
    var  parsed = json.decode(response) as List<dynamic>;
    return parsed.map<Product>((json) => Product.fromJson(json)).toList(); 
 } 
-static String host = "http://192.168.1.9:8000/api/";
-  List<Product> products = [];
+  List<Product> products=[];
   List<Product> productByDate = [];
   
  Future<void> fetchProducts() async { 

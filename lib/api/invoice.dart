@@ -4,13 +4,14 @@ import 'package:flutter_application_7/models/Invoice.dart';
 import 'package:flutter_application_7/models/InvoiceDetail.dart';
 import 'package:http/http.dart' as http;
 import '../models/Cart.dart';
+import 'package:flutter_application_7/constants.dart';
 
 class InvoiceReQuest extends ChangeNotifier{
 static List<Invoice> parseInvoice(String response) { 
    var  parsed = json.decode(response) as List<dynamic>;
    return parsed.map<Invoice>((json) => Invoice.fromJson(json)).toList(); 
 }
-static String host = "http://192.168.1.9:8000/api/";
+
   List<Invoice> invoices = [];
   int? countDetail ;
   List<InvoiceDetail> invoiceDetails = [];

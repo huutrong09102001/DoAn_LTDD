@@ -20,7 +20,7 @@ class Body extends StatelessWidget {
               child: AspectRatio(
                 aspectRatio: 1,
                 child: CachedNetworkImage(
-                            imageUrl:  "http://192.168.1.9:8000/storage/" + product.imageUrl,
+                            imageUrl:  imageHost + product.imageUrl,
                             fit: BoxFit.fill,
                             placeholder: (context , url ) => const Center(
                               child: CircularProgressIndicator(),
