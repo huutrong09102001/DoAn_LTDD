@@ -10,15 +10,32 @@ import 'package:flutter_application_7/screens/pay/pay_screen.dart';
 import 'package:flutter_application_7/screens/products/products_screen.dart';
 import 'package:flutter_application_7/screens/login_register/login/login_screen.dart';
 import 'package:provider/provider.dart';
+
+import 'api/cart.dart';
+
 void main() {
-  runApp(MultiProvider(providers:[
-    ChangeNotifierProvider(create: (context) => NetWorkReQuest(),),
-    ChangeNotifierProvider(create:(context)=> AccountReQuest(),),
-    ChangeNotifierProvider(create: (context)=> InvoiceReQuest(),)
-  ],
-  child:  const MyApp(),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (context) => NetWorkReQuest(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => AccountReQuest(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => InvoiceReQuest(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => Cartaccount(),
+      )
+    ],
+    child: const MyApp(),
   ));
 }
+
+class CartaccountReQuest {}
+
+class CartShopReQuest {}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -27,12 +44,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-      textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),
+        textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),
         primarySwatch: Colors.blue,
       ),
       home: LoginPage(),
     );
   }
 }
-
-

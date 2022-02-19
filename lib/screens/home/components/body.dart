@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_7/api/cart.dart';
 import 'package:flutter_application_7/api/invoice.dart';
 import 'package:flutter_application_7/constants.dart';
 import 'package:flutter_application_7/models/Account.dart';
@@ -27,7 +28,12 @@ class Body extends StatefulWidget {
      List<Product> productbyAPI = productapi.products;
      productapi.fetchProducts();
      productapi.ProductByDate();
-
+    var Cartapi = Provider.of<Cartaccount>(context, listen: false);
+   Map<String, String> data2 = {
+      '_accountId': widget.account[0].id.toString(),
+    };
+    Cartapi.GetListCart(data2);
+    
      var invoiceapi = Provider.of<InvoiceReQuest>(context, listen: false);
     Map<String, String> data = {
       '_accountId': widget.account[0].id.toString(),

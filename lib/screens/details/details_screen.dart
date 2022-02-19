@@ -54,42 +54,7 @@ class DetailsScreen extends StatelessWidget{
                            ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
-          child: ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(kDetailColor),
-                          ),
-                          onPressed: ()=> Navigator.push(
-                            context,
-                             MaterialPageRoute(builder: (context) => PayScreen(accountId: accountId,)
-                             ),
-                             ),
-                           child: Padding(
-                             padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin/2),
-                             child: Row(
-                               children: <Widget>[
-                                 Text(
-                                   "Mua ngay",
-                                   style: TextStyle(
-
-                                     color: Colors.white,
-                                     fontWeight: FontWeight.bold,
-                                   ),
-                                 ),
-                                 Padding(
-                                   padding: const EdgeInsets.only(left: kDefaultPaddin/2),
-                                   child: Icon(
-                                     Icons.shopping_cart,
-                                     size: 24,
-                                     color: Colors.white,
-                                   ),
-                                 ),
-                               ],
-                             ),
-                           ),
-          ),
-        ),
+       
       ],
     );
   }

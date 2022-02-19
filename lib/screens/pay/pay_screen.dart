@@ -8,18 +8,21 @@ import 'components/body.dart';
 
 class PayScreen extends StatelessWidget {
   final int accountId;
-
-  const PayScreen({Key? key,required  this.accountId}) : super(key: key);
+  final subtotal;
+  final List<Cart> carts;
+  const PayScreen({Key? key, required this.accountId, required this.carts, required this.subtotal})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
-    int subtotal = 0;
-    for (var cart in carts) {
-       subtotal =subtotal + cart.total;   
-    }
+    
     print(subtotal);
     return Scaffold(
       appBar: buildAppBar(context),
-      body: Body(subToTal: subtotal, accountId: accountId,),
+      body: Body(
+        subToTal: subtotal,
+        accountId: accountId,
+        carts: carts,
+      ),
       bottomNavigationBar: Container(
         height: 100,
         decoration: BoxDecoration(
@@ -29,138 +32,133 @@ class PayScreen extends StatelessWidget {
         child: Row(
           children: [
             Column(
-              children:  <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 10, left: kDefaultPaddin,
-                          ),
-                      child: Text.rich(
-                        TextSpan(
-                          text: "Thành tiền: ",
-                          children: [
-                            TextSpan(
-                              text: subtotal.toString() ,
-                              style: TextStyle(
-                                color: Color.fromRGBO(255, 0, 0, 0.7),
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 10, left: kDefaultPaddin,
-                          ),
-                      child: Text.rich(
-                        TextSpan(
-                          text: "Phí giao hàng: ",
-                          children: [
-                            TextSpan(
-                              text: "24.000đ",
-                              style: TextStyle(
-                                color: Color.fromRGBO(255, 0, 0, 0.7),
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 10, left: kDefaultPaddin,
-                          ),
-                      child: Text.rich(
-                        TextSpan(
-                          text: "Tổng thanh toán: ",
-                          children: [
-                            TextSpan(
-                              text: (subtotal+24000).toString(),
-                              style: TextStyle(
-                                color: Color.fromRGBO(255, 0, 0, 0.7),
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Container(
-                    width: 150,
-                    height: 40,
-                    
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(kDetailColor)
+                  padding: const EdgeInsets.only(
+                    top: 10,
+                    left: kDefaultPaddin,
+                  ),
+                  child: Text.rich(
+                    TextSpan(
+                      text: "Thành tiền: ",
+                      children: [
+                        TextSpan(
+                          text: subtotal.toString(),
+                          style: TextStyle(
+                            color: Color.fromRGBO(255, 0, 0, 0.7),
+                            fontSize: 15,
+                          ),
                         ),
-                        onPressed: (){
-                          payClick(subtotal);
-                        },
-                        child: Row(
-                          children: [
-                            Text(
-                              "Đặt hàng",
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5),
-                              child: Icon(
-                                Icons.shopping_cart,
-                                size: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      ],
                     ),
                   ),
-                
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 10,
+                    left: kDefaultPaddin,
+                  ),
+                  child: Text.rich(
+                    TextSpan(
+                      text: "Phí giao hàng: ",
+                      children: [
+                        TextSpan(
+                          text: "24.000đ",
+                          style: TextStyle(
+                            color: Color.fromRGBO(255, 0, 0, 0.7),
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 10,
+                    left: kDefaultPaddin,
+                  ),
+                  child: Text.rich(
+                    TextSpan(
+                      text: "Tổng thanh toán: ",
+                      children: [
+                        TextSpan(
+                          text: (subtotal + 24000).toString(),
+                          style: TextStyle(
+                            color: Color.fromRGBO(255, 0, 0, 0.7),
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Container(
+                width: 150,
+                height: 40,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(kDetailColor)),
+                  onPressed: () {
+                    payClick(subtotal);
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        "Đặt hàng",
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: Icon(
+                          Icons.shopping_cart,
+                          size: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
-        ),
-      );
+      ),
+    );
   }
 
-  Future payClick(var subtotal) async
-  {
-    Map<String ,String > data ={
-      '_accountId' : accountId.toString(),  
-      '_subtotal'  :  subtotal.toString(),
+  Future payClick(var subtotal) async {
+    Map<String, String> data = {
+      '_accountId': accountId.toString(),
+      '_subtotal': subtotal.toString(),
     };
     print(subtotal);
     print(accountId);
     bool checkCreateInvoice = await InvoiceReQuest.createInvoice(data);
     print(checkCreateInvoice);
-    if( checkCreateInvoice == true)
-    {
-      
-      Map<String ,String > data1 ={
-      '_accountId' : accountId.toString(),  
-    };
-      
+    if (checkCreateInvoice == true) {
+      Map<String, String> data1 = {
+        '_accountId': accountId.toString(),
+      };
+
       var invoiceId = await InvoiceReQuest.getInvoiceId(data1);
       print("InvoiceId la " + invoiceId);
-       for (var cart in carts) {
-      Map<String ,String > data2 ={
-      '_invoiceId' : invoiceId,
-      '_productId' :  cart.productId.toString(),
-      '_quantity' : cart.quantity.toString(),
-      '_price' : cart.price.toString(),
-      '_total' : cart.total.toString(),
-    };
-    InvoiceReQuest.addInvoiceDetail(data2);
-    }
+      for (var cart in carts) {
+        Map<String, String> data2 = {
+          '_invoiceId': invoiceId,
+          '_productId': cart.productId.toString(),
+          '_quantity': cart.quantity.toString(),
+          '_price': cart.price.toString(),
+
+        };
+        InvoiceReQuest.addInvoiceDetail(data2);
       }
-    else
-    {
+    } else {
       print("Khong thanh cong");
     }
-    
   }
 }
 
@@ -188,5 +186,3 @@ AppBar buildAppBar(BuildContext context) {
     ),
   );
 }
-
-
