@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_7/models/Cart.dart';
 import 'package:flutter_application_7/constants.dart';
@@ -11,7 +11,7 @@ class Cartaccount extends ChangeNotifier {
     return parsed.map<Cart>((json) => Cart.fromJson(json)).toList();
   }
 
-  static String host = "http://192.168.102.23:8000/api/";
+  
   List<Cart> cart1 = [];
   Future<void> GetListCart(var data) async {
     List<Cart> cart = [];

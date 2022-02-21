@@ -54,23 +54,12 @@ BottomNavigationBar buildBottomNavigationBar(BuildContext context , var account 
       currentIndex: 3,
       type: BottomNavigationBarType.fixed,
       onTap: (index){
-        print(index);
+       
         Navigator.push(
           context,
            PageRouteBuilder(
              pageBuilder: (context ,animation ,second){
-               if (index == 3)
-               {
-               return TTCNScreen(account: account, animation: animation) ;
-               }
-               if(index == 1)
-               {
-               return BlogScreen();
-               }
-               if(index == 2)
-               {
-               return NotiFy();
-               }
+             
                if(index == 0)
                {
                  return HomeScreen(account:account,);

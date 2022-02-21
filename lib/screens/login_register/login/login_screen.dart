@@ -6,6 +6,7 @@ import 'package:flutter_application_7/models/Account.dart';
 import 'package:flutter_application_7/screens/home/home_screen.dart';
 import 'package:flutter_application_7/screens/login_register/register/registerpage.dart';
 import 'package:provider/provider.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -24,12 +25,21 @@ class _LoginPageState extends State<LoginPage> {
   bool showPass1 = true;
   @override
   Widget build(BuildContext context) {
-    var productapi = Provider.of<NetWorkReQuest> (context ,
-     listen: false );
-     productapi.ProductByDate();
-     productapi.fetchProducts();
+    _showSnackBarMsg(BuildContext context)
+  {
+    final  snackBar = SnackBar(
+      content: Text('Message is restored!')
+    );
+    Scaffold.of(context).showSnackBar(snackBar);
+  }
+    Size size = MediaQuery.of(context).size;
+    var productapi = Provider.of<NetWorkReQuest>(context, listen: false);
+    productapi.ProductByDate();
+    productapi.fetchProducts();
+    productapi.ProductHot();
+    productapi.ProductBestSeller();
     return Scaffold(
-      backgroundColor: kBackgroundColor ,
+      backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Padding(
@@ -42,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Text(
                     'WELCOME TO TPTSTORE',
                     style: TextStyle(
-                      color: kTextColor,
+                        color: kTextColor,
                         fontSize: 25,
                         fontWeight: FontWeight.w900,
                         fontStyle: FontStyle.italic),
@@ -51,62 +61,41 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 50,
                 ),
-                Text(
-                  'Login',
-                  style: TextStyle(
-                    
+                Container(
+                  width: 500,
+                  height: 220,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/logo_store.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Text(
+                    'Login',
+                    style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
                       color: kTextColor,
+                    ),
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Column(
-                      children: [
-                        Image.network(
-                          "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Facebook_logo_36x36.svg/240px-Facebook_logo_36x36.svg.png",
-                          width: 50,
-                          height: 50,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text('Facebook')
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Image.network(
-                          "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2048px-Google_%22G%22_Logo.svg.png",
-                          width: 50,
-                          height: 50,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text('Google')
-                      ],
-                    ),
-                  ],
-                ),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                       TextField(
+                      TextField(
                         controller: usernameController,
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                             labelText: "Nhập Email",
-                             errorText: _usernameInvalid ? _usernameErr : null,
-
-                             ),
-                            
+                          border: OutlineInputBorder(),
+                          labelText: "Nhập Email",
+                          errorText: _usernameInvalid ? _usernameErr : null,
+                        ),
                       ),
                       const SizedBox(
                         height: 15,
@@ -115,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                         obscureText: showPass1,
                         controller: passwordController,
                         decoration: InputDecoration(
-                          errorText: _passwordInvalid ? _passErr : null,
+                            errorText: _passwordInvalid ? _passErr : null,
                             suffixIcon: IconButton(
                                 onPressed: () {
                                   setState(() {
@@ -135,15 +124,14 @@ class _LoginPageState extends State<LoginPage> {
                         width: 400,
                         child: ElevatedButton(
                             style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(Colors.lightGreen.withOpacity(0.7),
-                                ),
-                                ),
-                            onPressed: (){
+                              backgroundColor: MaterialStateProperty.all(
+                                Colors.lightGreen.withOpacity(0.7),
+                              ),
+                            ),
+                            onPressed: () {
                               SigninClick();
                               Login();
-                            }, /* Navigator.push(
-                              context,
-                             MaterialPageRoute(builder: (context)=> HomeScreen())), */
+                            },
                             child: const Text(
                               "Đăng Nhập",
                               style: TextStyle(color: Colors.white),
@@ -153,26 +141,29 @@ class _LoginPageState extends State<LoginPage> {
                         height: 10,
                       ),
                       TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context)=> RegisterPage()),
-                            );
-                          },
-                          child: const Text(
-                            'Tạo tài khoản mới ',
-                            style: TextStyle(
-                              color: kTextColor,
-                            ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegisterPage()),
+                          );
+                        },
+                        child: const Text(
+                          'Tạo tài khoản mới ',
+                          style: TextStyle(
+                            color: kTextColor,
                           ),
-                          ),
+                        ),
+                      ),
                       TextButton(
-                          onPressed: () {}, child: const Text(
-                            'Quên mật khẩu ',
-                            style: TextStyle(
-                              color: kTextColor,
-                            ),
-                          ),),
+                        onPressed: () {},
+                        child: const Text(
+                          'Quên mật khẩu ',
+                          style: TextStyle(
+                            color: kTextColor,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 )
@@ -182,45 +173,54 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+
   }
-  Future Login() async
-  {
-    Map<String ,String > data ={
-      '_username' : usernameController.text,
-      '_password'  : passwordController.text, 
+
+  Future Login() async {
+    Map<String, String> data = {
+      '_username': usernameController.text,
+      '_password': passwordController.text,
     };
     List<Account> res = await AccountReQuest.login(data);
-    if( res.length == 1)
-    {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen(account: res,)));
-      
-    }
-    else
-    {
-      print("Khong thanh cong");
+    if (res.length == 1) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomeScreen(
+                    account: res,
+                  )),
+          (route) => false);
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Thông báo'),
+          content: Text("Sai tên tài khoản hoặc mật khẩu! Vui lòng nhập lại."),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
     }
   }
-  void SigninClick ()
-{
-  setState(() {
-    if(usernameController.text.length < 6 )
-    {
-      _usernameInvalid = true;
-    }
-    else
-    {
-      _usernameInvalid = false;
-    }
 
-    if(passwordController.text.length < 6 )
-    {
-      _passwordInvalid = true;
-    }
-    else
-    {
-      _passwordInvalid = false;
-    }
-  });
-}
- 
+  void SigninClick() {
+    setState(() {
+      if (usernameController.text.length < 6) {
+        _usernameInvalid = true;
+      } else {
+        _usernameInvalid = false;
+      }
+
+      if (passwordController.text.length < 6) {
+        _passwordInvalid = true;
+      } else {
+        _passwordInvalid = false;
+      }
+    });
+  }
+  
 }

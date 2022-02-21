@@ -59,27 +59,17 @@ class HomeScreen extends StatefulWidget {
       currentIndex: 0,
       type: BottomNavigationBarType.fixed,
       onTap: (index){
-        print(index);
+        
         Navigator.push(
           context,
            PageRouteBuilder(
              pageBuilder: (context ,animation ,second){
-               if (index == 0)
-               {
-               return buildAnimation(widget, animation);
-               }
+              
                if(index == 1)
                {
-               return BlogScreen();
+               return TTCNScreen(account:widget.account,animation: animation,);
                }
-               if(index == 2)
-               {
-               return NotiFy();
-               }
-               if(index == 3)
-               {
-                 return TTCNScreen(account:widget.account,animation: animation,);
-               }
+                          
                return buildAnimation(widget, animation);
 
              },
@@ -91,15 +81,7 @@ class HomeScreen extends StatefulWidget {
         BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: "Trang chủ",
-            backgroundColor: kTextColor),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: "Tin tức",
-            backgroundColor: kTextColor),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: "Thông báo",
-            backgroundColor: kTextColor),
+            backgroundColor: kTextColor),       
         BottomNavigationBarItem(
             icon: CircleAvatar(
               radius: 14,

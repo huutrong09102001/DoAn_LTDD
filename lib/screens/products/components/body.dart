@@ -8,6 +8,7 @@ import 'package:flutter_application_7/models/Product.dart';
 import 'package:flutter_application_7/screens/cart/cart_shop.dart';
 import 'package:flutter_application_7/screens/details/details_screen.dart';
 import 'package:flutter_application_7/screens/products/products_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class Body extends StatefulWidget {
@@ -134,6 +135,7 @@ class _BodyState extends State<Body> {
                           : productByProviderId;
                       return ItemCard(
                         product: sortItem[index],
+                       
                         press: () => Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -152,21 +154,26 @@ class _BodyState extends State<Body> {
       ],
     );
   }
+
+  
 }
 
 class ItemCard extends StatelessWidget {
   final Product? product;
   final Function()? press;
+  
   final int accountId;
   const ItemCard({
     Key? key,
     this.product,
     this.press,
+    
     required this.accountId,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+   
     return GestureDetector(
       onTap: press,
       child: Container(
@@ -229,18 +236,21 @@ class ItemCard extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              width: 160,
-              height: 32,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(15)),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child:  Padding(
-                    padding: const EdgeInsets.only(left: 3),
+            Padding(
+              padding: const EdgeInsets.only(left: 15 ),
+              child: Container(
+                width: 160,
+                height: 32,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                child: Padding(
+                    padding: const EdgeInsets.only(left: 15),
                     child: Row(
                       children: <Widget>[
                         ElevatedButton(
+                          style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.lightGreen),
+                    ),
                           onPressed: () async{
                              
                               Map<String, String> data = {
@@ -249,13 +259,24 @@ class ItemCard extends StatelessWidget {
                               };
                               var checkThem = await NewCartItem(data);
                               if (checkThem == true) {
+                              Fluttertoast.showToast(
+                                 msg: "Thêm thành công" , 
+                                 fontSize : 18,
+                                 toastLength: Toast.LENGTH_SHORT,
+                                 gravity: ToastGravity.BOTTOM,
+                                 timeInSecForIosWeb: 2,
+                                 backgroundColor: Colors.yellowAccent,
+                                 textColor: Colors.white,
+                                 );
+                              }
+                               /* {
                                 showDialog(
                                   context: context,
                                   builder:(context) => AlertDialog(
                                     title:  Text(
-                                        'Thong bao'                                    
+                                        'Thông báo'                                    
                                     ),
-                                    content:  Text("Them thanh cong"),
+                                    content:  Text("Thêm thành công!"),
                                     actions: [
                                       TextButton(
                                         onPressed: () => Navigator.pop(context, 'OK'),
@@ -265,18 +286,19 @@ class ItemCard extends StatelessWidget {
                                     ],
                                     ),
                                 );
-                              }
+                              } */
                             
                           },
-                          child: Text(
-                            "Thêm vào giỏ",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Padding(
+                          child: Row(
+                            children: [
+                              Text(
+                                "Thêm vào giỏ",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Padding(
                           padding:
                               const EdgeInsets.only(left: kDefaultPaddin / 4),
                           child: Icon(
@@ -285,11 +307,15 @@ class ItemCard extends StatelessWidget {
                             color: Colors.white,
                           ),
                         ),
+                            ],
+                          ),
+                        ),
+                        
                       ],
                     ),
                   ),
                 ),
-              ),
+            ),
       
           ],
         ),
@@ -396,4 +422,5 @@ class _CategoriesState extends State<Categories> {
       ),
     );
   }
+   
 }

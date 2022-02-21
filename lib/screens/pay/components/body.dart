@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_7/api/invoice.dart';
 import 'package:flutter_application_7/constants.dart';
@@ -42,8 +43,9 @@ class Body extends StatelessWidget {
         ),
         SizedBox(height: 10),
         SizedBox(
-          height: 500,
+          height: 250.0 * carts.length,
           child: ListView.builder(
+            shrinkWrap: true,
             itemCount: carts.length,
             itemBuilder: (context, index) => Padding(
               padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
@@ -197,44 +199,56 @@ class DetailOrderItem extends StatelessWidget {
         height: 70,
         child: Row(
           children: <Widget>[
-            Container(
-              width: 100,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(cart.imageUrl),
-                  fit: BoxFit.cover,
+            Expanded(
+              child: Container(
+                width: 100,
+                child : CachedNetworkImage(
+                              imageUrl: imageHost +cart.imageUrl,
+                              fit: BoxFit.fill,
+                              placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                              errorWidget: (context, url, error) => Container(
+                                color: Colors.white,
+                              ),
+                            ),
+                
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: kDefaultPaddin / 4),
+                child: Column(
+                  children: [
+                    Text(
+                      cart.name,
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: kTextColor,
+                      ),
+                    ),
+                    Text(
+                      "Giá: " + cart.price.toString(),
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Color.fromRGBO(255, 0, 0, 0.7),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: kDefaultPaddin / 4),
-              child: Column(
-                children: [
-                  Text(
-                    cart.name,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: kTextColor,
-                    ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Text(
+                  "Số lượng: " + cart.quantity.toString(),
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: kTextColor,
                   ),
-                  Text(
-                    "Giá: " + cart.price.toString(),
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Color.fromRGBO(255, 0, 0, 0.7),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 5),
-              child: Text(
-                "Số lượng: " + cart.quantity.toString(),
-                style: TextStyle(
-                  fontSize: 15,
-                  color: kTextColor,
                 ),
               ),
             ),

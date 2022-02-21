@@ -11,6 +11,8 @@ static List<Product> parseProducts(String response) {
 } 
   List<Product> products=[];
   List<Product> productByDate = [];
+  List<Product> hotProducts = [];
+   List<Product> bestSellerProducts = [];
   
  Future<void> fetchProducts() async { 
   
@@ -45,6 +47,40 @@ Future<void> ProductByDate() async {
       throw Exception('Unable to fetch products from the REST API');
    } 
    productByDate = productByDate2;
+   notifyListeners();
+} 
+Future<void> ProductHot() async { 
+  
+  List<Product> productByDate2= [];
+  var url = host + "product/productHot";
+   http.Response response = await  http.get(Uri.parse(url)); 
+   if (response.statusCode == 200) { 
+     dynamic jsondata = json.decode(response.body);
+     dynamic data = jsondata["data"];
+     data.forEach((i){
+       productByDate2.add(Product.fromJson(i));
+     });
+   } else { 
+      throw Exception('Unable to fetch products from the REST API');
+   } 
+   hotProducts = productByDate2;
+   notifyListeners();
+} 
+Future<void> ProductBestSeller() async { 
+  
+  List<Product> productByDate2= [];
+  var url = host + "product/productHot";
+   http.Response response = await  http.get(Uri.parse(url)); 
+   if (response.statusCode == 200) { 
+     dynamic jsondata = json.decode(response.body);
+     dynamic data = jsondata["data"];
+     data.forEach((i){
+       productByDate2.add(Product.fromJson(i));
+     });
+   } else { 
+      throw Exception('Unable to fetch products from the REST API');
+   } 
+   bestSellerProducts = productByDate2;
    notifyListeners();
 } 
 }
