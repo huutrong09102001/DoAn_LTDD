@@ -1,16 +1,19 @@
-
 import 'package:flutter_application_7/models/Account.dart';
 import 'package:flutter_application_7/screens/accounts/user_info/TTTK.dart';
 import 'package:flutter_application_7/screens/accounts/orders/DHCT.dart';
 import 'package:flutter_application_7/screens/accounts/address/DCCT.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../api/account.dart';
 
 class Body extends StatelessWidget {
   final List<Account> account;
 
-  const Body({Key? key,required this.account}) : super(key: key);
+  const Body({Key? key, required this.account}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var Accountapi = Provider.of<AccountReQuest>(context, listen: false);
     return Column(
       children: <Widget>[
         SizedBox(
@@ -19,8 +22,6 @@ class Body extends StatelessWidget {
               Column(
                 children: <Widget>[
                   Container(),
-                  Text(account[0].fullname),
-                  Text("030003030303"),
                 ],
               ),
             ],
@@ -28,12 +29,21 @@ class Body extends StatelessWidget {
         ),
         SizedBox(height: 40),
         InkWell(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TTTKScreen(acccount: account,),
-                ));
+          onTap: () async {
+            Map<String, String> data1 = {
+              '_accountId': account[0].id.toString(),
+            };
+            List<Account> AccountUpdate =
+                await Accountapi.getListAccount(data1);
+            print(AccountUpdate[0].avt);
+            {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TTTKScreen(account: AccountUpdate),
+                  ));
+            }
+            ;
           },
           child: Padding(
             padding: EdgeInsets.all(8),
@@ -53,7 +63,9 @@ class Body extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DHCTScreen(account:account ,),
+                  builder: (context) => DHCTScreen(
+                    account: account,
+                  ),
                 ));
           },
           child: Padding(
