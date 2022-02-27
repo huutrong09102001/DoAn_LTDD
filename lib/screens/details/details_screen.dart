@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_7/api/cart.dart';
 import 'package:flutter_application_7/constants.dart';
 import 'package:flutter_application_7/models/Account.dart';
 import 'package:flutter_application_7/models/Product.dart';
 import 'package:flutter_application_7/screens/details/components/body.dart';
 import 'package:flutter_application_7/screens/cart/cart_shop.dart';
 import 'package:flutter_application_7/screens/pay/pay_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class DetailsScreen extends StatelessWidget{
   final Product product;
@@ -20,42 +22,71 @@ class DetailsScreen extends StatelessWidget{
     );
   }
 
-  Row buildBottomSheet(BuildContext context) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+   buildBottomSheet(BuildContext context) {
+     Size size = MediaQuery.of(context).size;
+    return Container(
+      width : size.width,
+      color: kBackgroundColor,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin*2),
+        child: Container(
+          width:  150 ,
+          height: 50,
           child: ElevatedButton(
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(kDetailColor),
                           ),
-                          onPressed: (){},
+                          onPressed: ()async{
+                             
+                              Map<String, String> data = {
+                                '_productId': product.id.toString(),
+                                '_accountId': accountId.toString()
+                              };
+                              var checkThem = await NewCartItem(data);
+                              if (checkThem == true) {
+                              Fluttertoast.showToast(
+                                 msg: "Thêm thành công" , 
+                                 fontSize : 18,
+                                 toastLength: Toast.LENGTH_SHORT,
+                                 gravity: ToastGravity.BOTTOM,
+                                 timeInSecForIosWeb: 2,
+                                 backgroundColor: Colors.amberAccent,
+                                 textColor: Colors.white,
+                                 );
+                              }
+                               
+                            
+                          },
                            child: Padding(
-                             padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin/2),
-                             child: Row(
-                               children: <Widget>[
-                                 Text(
-                                   "Thêm vào giỏ",
-                                   style: TextStyle(
-                                     color: Colors.white,
-                                     fontWeight: FontWeight.bold,
+                             padding: const EdgeInsets.only(left: 70),
+                             child: Container(
+                               width: 250,
+                               child: Row(
+                                 children: <Widget>[
+                                   Text(
+                                     "Thêm vào giỏ",
+                                     style: TextStyle(
+                                       fontSize: 18,
+                                       fontFamily: 'Times New Roman',
+                                       color: Colors.white,
+                                       fontWeight: FontWeight.bold,
+                                     ),
                                    ),
-                                 ),
-                                 Padding(
-                                   padding: const EdgeInsets.only(left: kDefaultPaddin/2),
-                                   child: Icon(
-                                     Icons.shopping_cart,
-                                     size: 24,
-                                     color: Colors.white,
+                                   Padding(
+                                     padding: const EdgeInsets.only(left: kDefaultPaddin/2),
+                                     child: Icon(
+                                       Icons.shopping_cart,
+                                       size: 18,
+                                       color: Colors.white,
+                                     ),
                                    ),
-                                 ),
-                               ],
+                                 ],
+                               ),
                              ),
                            ),
           ),
         ),
-       
-      ],
+      ),
     );
   }
 

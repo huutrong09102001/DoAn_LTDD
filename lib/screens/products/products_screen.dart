@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_7/api/cart.dart';
 import 'package:flutter_application_7/constants.dart';
 import 'package:flutter_application_7/models/Account.dart';
+import 'package:flutter_application_7/models/Cart.dart';
 import 'package:flutter_application_7/models/Product.dart';
+import 'package:flutter_application_7/screens/cart/cart_shop.dart';
 import 'package:flutter_application_7/screens/home/home_screen.dart';
-import 'package:flutter_application_7/screens/products/components/body.dart'; 
+import 'package:flutter_application_7/screens/products/components/body.dart';
+import 'package:provider/provider.dart'; 
 class ProductsScreen extends StatelessWidget{
   final int  providerId;
   final String Categories;
@@ -65,8 +69,14 @@ class ProductsScreen extends StatelessWidget{
   
  AppBar buildAppBar(BuildContext context){
   return AppBar(
-        
-        backgroundColor: Colors.greenAccent,
+        title: Text(
+          "Sản phẩm",
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.white
+          ),
+        ),
+        backgroundColor: kBackgroundColor,
         elevation: 0,
         leading: IconButton(
           icon: Icon(
@@ -83,7 +93,9 @@ class ProductsScreen extends StatelessWidget{
                   color: kTextColor,
                   size: 20.0,
           ),
-          onPressed: (){},
+          onPressed: (){
+             
+          },
           ),
           IconButton(
             icon: Icon(
@@ -91,7 +103,20 @@ class ProductsScreen extends StatelessWidget{
                   color: kTextColor,
                   size: 20.0,
           ),
-          onPressed: (){},
+          onPressed: ()async{
+            Map<String, String> data2 = {
+                 '_accountId': account[0].id.toString(),
+                   };
+                   var Cartapi = Provider.of<Cartaccount>(context, listen: false);
+
+                  List<Cart> ListCartByAPI = await Cartapi.GetListCart(data2);
+                  Navigator.push(
+                  context,
+                   MaterialPageRoute(
+                     builder: (context) => CartShop(accounts: account,carts: ListCartByAPI,),
+                     ),
+                  );
+          },
           ),
           SizedBox(width: kDefaultPaddin/ 2)
         ],

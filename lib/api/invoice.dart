@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_7/models/Invoice.dart';
 import 'package:flutter_application_7/models/InvoiceDetail.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import '../models/Cart.dart';
 import 'package:flutter_application_7/constants.dart';
@@ -55,7 +56,10 @@ static Future<bool> createInvoice (var data) async {
    headers: _setHeader(),
    body: jsonEncode(data));
    if (response.statusCode == 200) { 
+     EasyLoading.showSuccess('Thanh toán thành công!');
+         
      print(response.statusCode);
+      EasyLoading.dismiss();
      return true;
    } else {
      print(response.statusCode);

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import '../models/Account.dart';
@@ -17,14 +18,16 @@ class AccountReQuest extends ChangeNotifier {
     String url = host + "account/login";
     var response = await http.post(Uri.parse(url),
         headers: _setHeader(), body: jsonEncode(data));
+    EasyLoading.show(status: 'loading...');
     if (response.statusCode == 200) {
+      EasyLoading.showSuccess('Đăng nhập thành công!');
       dynamic jsondata = json.decode(response.body);
       dynamic data = jsondata["data"];
 
       data.forEach((i) {
         acc.add(Account.fromJson(i));
       });
-
+      EasyLoading.dismiss();
       return acc;
     } else {
       print(response.body);
@@ -112,6 +115,18 @@ class AccountReQuest extends ChangeNotifier {
       throw Exception('Failed');
     }
   }
+  static Future updateAddress(var data) async {
+    var url = host + "account/updateAddress";
+    http.Response response = await http.post(Uri.parse(url),
+        headers: _setHeader(), body: jsonEncode(data));
+
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('Failed');
+    }
+  }
 
   static Future<String> getpass(var data) async {
     String pass;
@@ -148,13 +163,13 @@ class AccountReQuest extends ChangeNotifier {
     } else {
       throw Exception('Unable to fetch products from the REST API');
     }
-    notifyListeners();
+    
   }
 
   Future postdata(Map<String, String> data, PickedFile? image) async {
-    var url = host + 'account/updateimg';
+    var url = host + 'account/updateAVT';
     var request = http.MultipartRequest('POST', Uri.parse(url));
-    request.headers.addAll(_setHeader());
+    request.headers.addAll(_setHeaderFIle());
     request.fields.addAll(data);
     if (image != null) {
       request.files.add(await http.MultipartFile.fromPath(
@@ -169,4 +184,6 @@ class AccountReQuest extends ChangeNotifier {
       return "Thất bại";
     }
   }
+  _setHeaderFIle() =>
+    {'Content-Type': 'application/json; charset=utf-8,image/jpg'};
 }

@@ -1,4 +1,5 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_7/constants.dart';
@@ -51,7 +52,7 @@ BottomNavigationBar buildBottomNavigationBar(BuildContext context , var account 
     return BottomNavigationBar(
       selectedItemColor: Colors.lightGreen,
       backgroundColor: kBackgroundColor,
-      currentIndex: 3,
+      currentIndex: 1,
       type: BottomNavigationBarType.fixed,
       onTap: (index){
        
@@ -76,18 +77,15 @@ BottomNavigationBar buildBottomNavigationBar(BuildContext context , var account 
             icon: Icon(Icons.home),
             label: "Trang chủ",
             backgroundColor: kTextColor),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: "Tin tức",
-            backgroundColor: kTextColor),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: "Thông báo",
-            backgroundColor: kTextColor),
+        
         BottomNavigationBarItem(
             icon: CircleAvatar(
               radius: 14,
-              backgroundImage: AssetImage('assets/images/HuChong.jpg'),
+              backgroundImage:CachedNetworkImageProvider(
+                     imageHost + account[0].avt,
+                     errorListener: () => Container(color: Colors.amber,), 
+
+                  ),
             ),
             label: "Tài khoản"),
       ],

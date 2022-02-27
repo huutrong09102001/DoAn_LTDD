@@ -61,7 +61,7 @@ class DHCTScreen extends StatefulWidget {
       child: Scaffold(
         backgroundColor: kBackgroundColor.withOpacity(1),
         appBar: buildAppBar(),
-        body: background1(
+        body: backgrountInvoiceScreen(
             TabBarView(children: [
               FutureBuilder(
                 future: invoiceapi.getInvoiceListByAccountId(data),
@@ -70,7 +70,7 @@ class DHCTScreen extends StatefulWidget {
                 for (var item in listInvoiceBy0)
                   Column(
                     children: [
-                      don('Hủy đơn', context, item ,widget.account),
+                     invoice('Hủy đơn', context, item ,widget.account),
                       SizedBox(
                         height: 15,
                       ),
@@ -84,7 +84,7 @@ class DHCTScreen extends StatefulWidget {
                 for (var item in listInvoiceBy1)
                   Column(
                     children: [
-                      don('Hủy đơn', context , item , widget.account),
+                     invoice('Hủy đơn', context , item , widget.account),
                       SizedBox(
                         height: 15,
                       ),
@@ -95,7 +95,7 @@ class DHCTScreen extends StatefulWidget {
                for (var item in listInvoiceBy2)
                   Column(
                     children: [
-                      don('Hủy đơn', context,item ,widget.account),
+                     invoice('Hủy đơn', context,item ,widget.account),
                       SizedBox(
                         height: 15,
                       ),
@@ -106,7 +106,7 @@ class DHCTScreen extends StatefulWidget {
                for (var item in listInvoiceBy3)
                   Column(
                     children: [
-                      don('Đánh giá', context , item , widget.account),
+                     invoice('Đánh giá', context , item , widget.account),
                       SizedBox(
                         height: 15,
                       ),
@@ -117,7 +117,7 @@ class DHCTScreen extends StatefulWidget {
                 for (var item in listInvoiceBy0)
                   Column(
                     children: [
-                      don('Mua lại', context , item , widget.account),
+                     invoice('Mua lại', context , item , widget.account),
                       SizedBox(
                         height: 15,
                       ),
@@ -143,7 +143,7 @@ AppBar buildAppBar() {
       indicatorColor: Colors.white,
       tabs: [
         Tab(text: 'Chờ xác nhận'),
-        Tab(text: 'Chờ lấy hàng'),
+        Tab(text: 'Đang vận chuyển'),
         Tab(text: 'Đang giao'),
         Tab(text: 'Đã giao'),
         Tab(text: 'Đã hủy')
@@ -152,7 +152,7 @@ AppBar buildAppBar() {
   );
 }
 
-Widget background1(TabBarView lb, context) {
+Widget backgrountInvoiceScreen(TabBarView lb, context) {
   return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: GestureDetector(
@@ -181,7 +181,7 @@ Widget background1(TabBarView lb, context) {
 
 
 
-Widget don(String button, BuildContext context, Invoice invoice , List<Account> acc) {
+Widget invoice(String button, BuildContext context, Invoice invoice , List<Account> acc) {
   return InkWell(
     onTap: () {
       var invoiceapi = Provider.of<InvoiceReQuest>(context, listen: false);
@@ -259,7 +259,7 @@ Widget don(String button, BuildContext context, Invoice invoice , List<Account> 
               button,
               style: const TextStyle(
                 fontSize: 16.0,
-                fontFamily: 'Righteous',
+                fontFamily: kFontFamily,
                 fontWeight: FontWeight.w600,
               ),
             ),

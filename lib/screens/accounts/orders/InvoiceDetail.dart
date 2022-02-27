@@ -6,6 +6,9 @@ import 'package:flutter_application_7/models/Account.dart';
 import 'package:flutter_application_7/models/InvoiceDetail.dart';
 import 'package:provider/provider.dart';
 
+import '../../../constants.dart';
+import 'detailItem.dart';
+
 class InvoiceDetailScreen extends StatelessWidget {
   final List<Account> account;
   final int  invoiceId;
@@ -24,7 +27,7 @@ class InvoiceDetailScreen extends StatelessWidget {
     print(account[0].id);
     print("so luong chi tiet : "+ invoiceDetails.length.toString());
     for (var item in invoiceDetails) {
-      subtotal = subtotal+item.total;
+      subtotal = subtotal+ (item.quantity * item.price);
     }
   List<int> test = [1,2,3,4];
     return Scaffold(
@@ -183,12 +186,15 @@ class InvoiceDetailScreen extends StatelessWidget {
                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
 
-                            Text('Thời gian đặt hàng',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.orange,
-                                ),),
-                                SizedBox(width: 60,),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10,),
+                              child: Text('Thời gian đặt hàng',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.orange,
+                                  ),),
+                            ),
+                                SizedBox(width: 30,),
                             Text(
                               invoiceDetails[0].date,
                               style: TextStyle(
@@ -199,25 +205,7 @@ class InvoiceDetailScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                        Row(
-                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text('Thời gian giao hàng',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.orange,
-                                ),),
-                                SizedBox(width: 60,),
-                            Text(
-                              'Uả alo?',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.orange,
-                              ),
-                              textAlign: TextAlign.end,
-                            )
-                          ],
-                        )
+                       
                       ],
                     ),
                   )
@@ -229,80 +217,5 @@ class InvoiceDetailScreen extends StatelessWidget {
   }
 }
 
-class DetailItem extends StatelessWidget {
-  InvoiceDetail detail;
-   DetailItem({
-    Key? key,
-    required this.detail,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-      ),
-      child: Column(children: [
-        SizedBox(
-          height: 5,
-        ),
-        Row(children: [
-          Container(
-            width: 80,
-            height: 50,
-            child: CachedNetworkImage(
-                            imageUrl:  "http://192.168.1.9:8000/storage/" +detail.imageUrl,
-                            fit: BoxFit.fill,
-                            placeholder: (context , url ) => const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                            errorWidget: (context , url , error) => Container(
-                              color: Colors.white,
-                            ),
-                          ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Container(
-                constraints: BoxConstraints(maxWidth: 300),
-                child: Text(
-                  detail.name,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: false,
-                  maxLines: 1,
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-              Text(
-                detail.quantity.toString(),
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-              Text(
-                "Giá: " +detail.price.toString()+"đ",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.orange,
-                ),
-              ),
-              Text(
-                "Thành tiền: " +(detail.price*detail.quantity).toString()+"đ",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.orange,
-                ),
-              ),
-            ],
-          )
-        ]),
-        SizedBox(
-          height: 5,
-        )
-      ])
-      );
-  }
-}
 

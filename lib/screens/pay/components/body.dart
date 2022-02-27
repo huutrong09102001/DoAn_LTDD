@@ -8,9 +8,9 @@ import 'package:flutter_application_7/screens/accounts/address/DCCT.dart';
 
 class Body extends StatelessWidget {
   final int subToTal;
-  final int accountId;
+  final List<Account> account;
   final List<Cart> carts;
-   Body({Key? key, required this.subToTal, required this.accountId, required this.carts})
+   Body({Key? key, required this.subToTal, required this.account, required this.carts})
       : super(key: key);
 
   @override
@@ -63,14 +63,14 @@ class Body extends StatelessWidget {
         border: Border.all(color: Colors.lightGreen, width: 2),
       ),
       width: size.width,
-      height: 70,
+      height: 80,
       child: Row(
         children: [
-          Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: kDefaultPaddin / 2),
-                child: Row(
+          Expanded(
+            flex: 4,
+            child: Column(
+              children: <Widget>[
+                Row(
                   children: [
                     Icon(
                       Icons.maps_home_work,
@@ -88,54 +88,28 @@ class Body extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: kDefaultPaddin / 2),
-                child: Text(
-                  'Mai Chi Tho . Q2 , TPHCm',
+                Text(
+                  account[0].address,
                   style: TextStyle(
                     fontSize: 15,
                     color: kTextColor,
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: kDefaultPaddin / 2),
-                child: Row(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.account_circle,
-                          size: 15,
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: kDefaultPaddin / 2),
-                          child: Text(
-                            'Lê Hữu Trọng' + "  |",
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: kTextColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: kDefaultPaddin),
-                      child: Row(
+                Padding(
+                  padding: const EdgeInsets.only(left: kDefaultPaddin / 2),
+                  child: Row(
+                    children: <Widget>[
+                      Row(
                         children: <Widget>[
                           Icon(
-                            Icons.phone,
+                            Icons.account_circle,
                             size: 15,
                           ),
                           Padding(
                             padding:
                                 const EdgeInsets.only(left: kDefaultPaddin / 2),
                             child: Text(
-                              "0345643567",
+                              account[0].fullname + "  |",
                               style: TextStyle(
                                 fontSize: 15,
                                 color: kTextColor,
@@ -144,31 +118,50 @@ class Body extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: kDefaultPaddin/2),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.phone,
+                              size: 15,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: kDefaultPaddin / 2),
+                              child: Text(
+                                account[0].phone,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: kTextColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 5),
-            child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(kDetailColor),
-              ),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DCCTScreen(),
+          Expanded(
+            
+            child: Container(
+              width: 100,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(kDetailColor),
                 ),
-              ),
-              child: Row(
-                children: [
-                  Text("Thay đổi"),
-                  Icon(
-                    Icons.navigate_next,
-                  )
-                ],
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DCCTScreen(account: account,),
+                  ),
+                ),
+                child: Text("Sửa",style: TextStyle(fontSize: 18),),
               ),
             ),
           ),

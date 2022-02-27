@@ -1,11 +1,11 @@
 class InvoiceDetail{
-  int invoiceId, quantity , price ,total , productId; 
+  int invoiceId, quantity , price  , productId; 
   String name , imageUrl , date;
  
   InvoiceDetail(
       {
      required this.invoiceId ,
-     required this.total,
+   
      required this.quantity,
      required this.price,
      required this.productId,
@@ -17,7 +17,6 @@ class InvoiceDetail{
 
   InvoiceDetail.fromJson(Map<String, dynamic> json) : 
     invoiceId = json['invoiceId'],
-    total = json['total'],
      quantity = json['quantity'],                                          
     price = json['price'],
     name = json['name'],
@@ -30,7 +29,7 @@ class InvoiceDetail{
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['invoiceId'] = this.invoiceId;
-    data['total'] = this.total ;
+    
     data['quantity'] = this.quantity;
     data['productId'] = this.productId;
     data['name'] = this.name;

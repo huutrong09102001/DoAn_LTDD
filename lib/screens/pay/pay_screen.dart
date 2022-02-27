@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_7/api/invoice.dart';
+import 'package:flutter_application_7/models/Account.dart';
 import 'package:flutter_application_7/models/Cart.dart';
+import 'package:flutter_application_7/screens/home/home_screen.dart';
 import 'package:flutter_application_7/screens/pay/components/body.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '../../constants.dart';
 import 'package:flutter_application_7/models/Cart.dart';
 import 'components/body.dart';
 
 class PayScreen extends StatelessWidget {
-  final int accountId;
+  final List<Account> account;
   final subtotal;
   final List<Cart> carts;
-  const PayScreen({Key? key, required this.accountId, required this.carts, required this.subtotal})
+  const PayScreen({Key? key, required this.account, required this.carts, required this.subtotal})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class PayScreen extends StatelessWidget {
       appBar: buildAppBar(context),
       body: Body(
         subToTal: subtotal,
-        accountId: accountId,
+        account: account ,
         carts: carts,
       ),
       bottomNavigationBar: Container(
@@ -105,7 +108,7 @@ class PayScreen extends StatelessWidget {
                       backgroundColor:
                           MaterialStateProperty.all<Color>(kDetailColor)),
                   onPressed: () {
-                    payClick(subtotal);
+                    payClick(subtotal,context);
                   },
                   child: Row(
                     children: [
@@ -130,18 +133,20 @@ class PayScreen extends StatelessWidget {
     );
   }
 
-  Future payClick(var subtotal) async {
+  Future payClick(var subtotal,BuildContext context) async {
     Map<String, String> data = {
-      '_accountId': accountId.toString(),
+      '_accountId':account[0].id.toString(),
       '_subtotal': subtotal.toString(),
+      '_address' : account[0].address,
     };
     print(subtotal);
-    print(accountId);
+    print(account[0].id);
     bool checkCreateInvoice = await InvoiceReQuest.createInvoice(data);
     print(checkCreateInvoice);
     if (checkCreateInvoice == true) {
+      
       Map<String, String> data1 = {
-        '_accountId': accountId.toString(),
+        '_accountId': account[0].id.toString(),
       };
 
       var invoiceId = await InvoiceReQuest.getInvoiceId(data1);
@@ -155,10 +160,14 @@ class PayScreen extends StatelessWidget {
 
         };
         InvoiceReQuest.addInvoiceDetail(data2);
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeScreen(account: account,)), (route) => false);
       }
+      
+       
     } else {
       print("Khong thanh cong");
     }
+  
   }
 }
 

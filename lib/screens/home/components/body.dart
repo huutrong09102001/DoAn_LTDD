@@ -6,6 +6,7 @@ import 'package:flutter_application_7/models/Account.dart';
 import 'package:flutter_application_7/models/Product.dart';
 import 'package:flutter_application_7/api/sanpham.dart';
 import 'package:flutter_application_7/screens/details/details_screen.dart';
+import 'package:flutter_application_7/screens/products/components/itemCard.dart';
 import 'package:flutter_application_7/screens/products/products_screen.dart';
 import 'package:flutter_application_7/screens/products/components/body.dart';
 import 'package:provider/provider.dart';
@@ -40,30 +41,7 @@ class _BodyState extends State<Body> {
     Size size = MediaQuery.of(context).size;
     return Column(
       children: <Widget>[
-        /* Container(
-          height: size.height * 0.2,
-          child: Stack(
-            children: <Widget>[
-              /* Container(
-                height: size.height * 0.2 - 27,
-                color: kBackgroundColor,
-                child: Center(
-                  child: Container(
-                      width: 220,
-                      height: 120,  
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/images/logo_store.png"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                ),
-              ), */
-              
-            ],
-          ),
-        ), */
+        
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin / 2),
           child: Container(
@@ -214,6 +192,7 @@ class _BodyState extends State<Body> {
                           child: Text(
                             'Sản phẩm  mới nhất',
                             style: TextStyle(
+                              fontFamily: kFontFamily,
                               color: kTextColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0,
@@ -229,14 +208,14 @@ class _BodyState extends State<Body> {
                                 style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(
-                                          Colors.lightGreen),
+                                          kBackgroundColor),
                                 ),
                                 onPressed: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => ProductsScreen(
                                             providerId: 0,
-                                            Categories: "Tất cả sản phẩm",
+                                            Categories: "Tất cả",
                                             selected: 0,
                                             account: widget.account,
                                             product: productbyAPI,
@@ -245,7 +224,8 @@ class _BodyState extends State<Body> {
                                 child: Text(
                                   "Xem tất cả",
                                   style: TextStyle(
-                                    color: kTextColor,
+                                    fontFamily: kFontFamily,
+                                    color: Colors.white,
                                     fontStyle: FontStyle.italic,
                                   ),
                                 ),
@@ -269,7 +249,7 @@ class _BodyState extends State<Body> {
                                 crossAxisCount: 2,
                                 mainAxisSpacing: kDefaultPaddin / 4,
                                 crossAxisSpacing: kDefaultPaddin / 4,
-                                childAspectRatio: 0.75,
+                                childAspectRatio: 0.8,
                               ),
                               itemBuilder: (context, index) => ItemCard(
                                 product: productapi.productByDate[index],
@@ -292,7 +272,7 @@ class _BodyState extends State<Body> {
               ),
               Container(
                 height: 500,
-                width: 400,
+                width: 100,
                 child: ListView(
                   children: [
                     Row(
@@ -304,6 +284,7 @@ class _BodyState extends State<Body> {
                           child: Text(
                             'Sản phẩm  nổi bật',
                             style: TextStyle(
+                              fontFamily: kFontFamily,
                               color: kTextColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0,
@@ -335,6 +316,7 @@ class _BodyState extends State<Body> {
                                 child: Text(
                                   "Xem tất cả",
                                   style: TextStyle(
+                                    fontFamily: kFontFamily,
                                     color: kTextColor,
                                     fontStyle: FontStyle.italic,
                                   ),
@@ -394,6 +376,7 @@ class _BodyState extends State<Body> {
                           child: Text(
                             'Sản phẩm  bán chạy',
                             style: TextStyle(
+                              fontFamily: kFontFamily,
                               color: kTextColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0,
@@ -425,6 +408,7 @@ class _BodyState extends State<Body> {
                                 child: Text(
                                   "Xem tất cả",
                                   style: TextStyle(
+                                    fontFamily: kFontFamily,
                                     color: kTextColor,
                                     fontStyle: FontStyle.italic,
                                   ),

@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_7/api/cart.dart';
 import 'package:flutter_application_7/api/sanpham.dart';
 import 'package:flutter_application_7/constants.dart';
 import 'package:flutter_application_7/models/Account.dart';
+import 'package:flutter_application_7/models/Cart.dart';
 import 'package:flutter_application_7/models/Product.dart';
 import 'package:flutter_application_7/screens/accounts/user_info/TTCN.dart';
 import 'package:flutter_application_7/screens/blog/blog.dart';
@@ -11,6 +14,8 @@ import 'package:flutter_application_7/screens/cart/cart_shop.dart';
 import 'package:flutter_application_7/screens/notify/notify.dart';
 import 'package:flutter_application_7/screens/accounts/user_info/TTTK.dart';
 import 'package:provider/provider.dart';
+
+import 'components/customSearch.dart';
 
 class HomeScreen extends StatefulWidget {
   final List<Account> account;
@@ -85,7 +90,11 @@ class HomeScreen extends StatefulWidget {
         BottomNavigationBarItem(
             icon: CircleAvatar(
               radius: 14,
-              backgroundImage: AssetImage('assets/images/HuChong.jpg'),
+              backgroundImage: CachedNetworkImageProvider(
+                     imageHost + widget.account[0].avt,
+                     errorListener: () => Container(color: Colors.amber,), 
+
+                  ),
             ),
             label: "Tài khoản"),
       ],
@@ -94,15 +103,16 @@ class HomeScreen extends StatefulWidget {
 
   AppBar buildAppBar(BuildContext context ) {
     return AppBar(
+      title: Text(
+        "TPT Store",
+        style: TextStyle(fontFamily:kFontFamily, color: kTextColor, fontWeight: FontWeight.bold , fontSize: 18),
+      ),
       elevation: 0,
       backgroundColor:kBackgroundColor,
-      leading: IconButton(
-        icon: Icon(
-          Icons.menu,
-          color: Colors.black,
-          size: 20.0,
-        ),
-        onPressed: () {},
+      leading: Container(
+        
+        child: Icon(Icons.phone_android_sharp,size: 30,color: kTextColor,),
+
       ),
       actions: <Widget>[
         
@@ -118,143 +128,32 @@ class HomeScreen extends StatefulWidget {
                                );
                             },
                           ),  
-              Row(
-                  children: <Widget>[
-                    IconButton(
-                      splashRadius: 20,
-                      onPressed: () => Navigator.push(
-                        context,
-                         MaterialPageRoute(
-                           builder: (context) => CartShop(accountId: widget.account[0].id,),
-                           ),
-                        ),
-                      icon: const Icon(
-                        Icons.shopping_cart,
-                        size: 30.0,
-                        color: kTextColor,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 5),
-                      child: IconButton(
-                        splashRadius: 20,
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.chat,
-                          size: 30.0,
-                          color: kTextColor,
-                        ),
-                      ),
-                    ),
-                  ],
+              IconButton(
+                splashRadius: 20,
+                onPressed: ()async { 
+                  Map<String, String> data2 = {
+                 '_accountId': widget.account[0].id.toString(),
+                   };
+                   var Cartapi = Provider.of<Cartaccount>(context, listen: false);
+
+                  List<Cart> ListCartByAPI = await Cartapi.GetListCart(data2);
+                  Navigator.push(
+                  context,
+                   MaterialPageRoute(
+                     builder: (context) => CartShop(accounts: widget.account,carts: ListCartByAPI,),
+                     ),
+                  );
+                },
+                icon: const Icon(
+                  Icons.shopping_cart,
+                  size: 30.0,
+                  color: kTextColor,
                 ),
+              ),
       ],
     );
     
   }
 }
 
-class CustomSearch extends SearchDelegate {
-   final int accountId;
 
-  CustomSearch(this.accountId);
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    
-    return [
-      IconButton(
-        onPressed: (){
-          query ="";
-        },
-         icon: const Icon(Icons.clear),
-         ),
-    ];
-  }
-
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-      onPressed: (){
-        close(context, null);
-      }, 
-      icon: const Icon(Icons.arrow_back),
-      );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context ,  ) {
-    var productapi = Provider.of<NetWorkReQuest> (context ,
-     listen: false );
-      
-    List<Product> matchQuery = [];
-    for(var item in  productapi.products)
-    {
-      if(item.name.toLowerCase().contains(query.toLowerCase()))
-      {
-        matchQuery.add(item);
-      }
-    }
-    return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context , index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title :TextButton(
-            onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder:(context)=>DetailsScreen(product: matchQuery[index] , accountId: accountId, ),
-                ),
-              );
-            },
-            child: Text(
-              result.name,
-              style: TextStyle(
-                fontSize: 17,
-                color:  kTextColor,
-              ),
-              ),
-          )
-        );
-      }
-      );
-  }
-  
-  @override
-  Widget buildResults(BuildContext context) {
-     var productapi = Provider.of<NetWorkReQuest> (context ,
-     listen: false );
-     List<Product> matchQuery = [];
-    for(var item in  productapi.products)
-    {
-      if(item.name.toLowerCase().contains(query.toLowerCase()))
-      {
-        matchQuery.add(item);
-      }
-    }
-   return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context , index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title : TextButton(
-            onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder:(context)=>DetailsScreen(product: matchQuery[index] , accountId: accountId,),
-                ),
-              );
-            },
-            child: Text(
-              result.name,
-              style: TextStyle(
-                fontSize: 20,
-                
-              ),
-            ),
-          )
-        );
-      }
-      );
-  }
-}

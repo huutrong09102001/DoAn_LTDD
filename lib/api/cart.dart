@@ -13,7 +13,7 @@ class Cartaccount extends ChangeNotifier {
 
   
   List<Cart> cart1 = [];
-  Future<void> GetListCart(var data) async {
+  Future<List<Cart>> GetListCart(var data) async {
     List<Cart> cart = [];
     String url = host + "cart/layGioHang";
     var response = await http.post(Uri.parse(url),
@@ -26,8 +26,8 @@ class Cartaccount extends ChangeNotifier {
         cart.add(Cart.fromJson(i));
       });
 
-      cart1 = cart;
-      notifyListeners();
+      return  cart;
+      
     } else {
       print(response.statusCode);
       throw Exception("Fail");
@@ -46,6 +46,17 @@ class Cartaccount extends ChangeNotifier {
   }
   static Future Updatesanpham(var data) async {
     String url = host + "cart/updateQuantity";
+    var response = await http.post(Uri.parse(url),
+        headers: _setHeader(), body: jsonEncode(data));
+    if (response.statusCode == 200) {
+      print('thanh cong');
+      return true;
+    } else {
+      throw Exception("Fail");
+    }
+  }
+  static Future Updategiamsanpham(var data) async {
+    String url = host + "cart/updateDescQuantity";
     var response = await http.post(Uri.parse(url),
         headers: _setHeader(), body: jsonEncode(data));
     if (response.statusCode == 200) {

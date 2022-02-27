@@ -3,6 +3,7 @@ import 'package:flutter_application_7/screens/accounts/user_info/TTTK.dart';
 import 'package:flutter_application_7/screens/accounts/orders/DHCT.dart';
 import 'package:flutter_application_7/screens/accounts/address/DCCT.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_7/screens/login_register/login/login_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../api/account.dart';
@@ -86,7 +87,7 @@ class Body extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DCCTScreen(),
+                  builder: (context) => DCCTScreen(account: account,),
                 ));
           },
           child: Padding(
@@ -102,6 +103,21 @@ class Body extends StatelessWidget {
           ),
         ),
         SizedBox(height: 40),
+        InkWell(
+          onTap: () => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginPage()), (route) => false),
+          child: Padding(
+            padding: EdgeInsets.all(8),
+            child: Row(
+              children: <Widget>[
+                Icon(Icons.door_back_door_sharp, size: 40),
+                Text("Đăng xuất"),
+                Spacer(),
+                Icon(Icons.arrow_forward_ios),
+               
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }

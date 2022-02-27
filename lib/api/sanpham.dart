@@ -69,7 +69,7 @@ Future<void> ProductHot() async {
 Future<void> ProductBestSeller() async { 
   
   List<Product> productByDate2= [];
-  var url = host + "product/productHot";
+  var url = host + "product/productBestSeller";
    http.Response response = await  http.get(Uri.parse(url)); 
    if (response.statusCode == 200) { 
      dynamic jsondata = json.decode(response.body);

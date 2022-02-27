@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_7/api/sanpham.dart';
 import 'package:flutter_application_7/constants.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_application_7/api/account.dart';
 import 'package:flutter_application_7/models/Account.dart';
 import 'package:flutter_application_7/screens/home/home_screen.dart';
 import 'package:flutter_application_7/screens/login_register/register/registerpage.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,6 +18,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  Timer? _timer;
   TextEditingController usernameController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
   var _usernameErr = "Tài khoản không hợp lệ";
@@ -23,6 +27,19 @@ class _LoginPageState extends State<LoginPage> {
   var _passwordInvalid = false;
 
   bool showPass1 = true;
+
+  @override
+  void initState() {
+    
+    super.initState();
+     EasyLoading.addStatusCallback((status) {
+      print('EasyLoading Status $status');
+      if (status == EasyLoadingStatus.dismiss) {
+        _timer?.cancel();
+      }
+    });
+   
+  }
   @override
   Widget build(BuildContext context) {
     _showSnackBarMsg(BuildContext context)
@@ -182,7 +199,9 @@ class _LoginPageState extends State<LoginPage> {
       '_password': passwordController.text,
     };
     List<Account> res = await AccountReQuest.login(data);
+    
     if (res.length == 1) {
+      
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
@@ -190,6 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                     account: res,
                   )),
           (route) => false);
+     
     } else {
       showDialog(
         context: context,

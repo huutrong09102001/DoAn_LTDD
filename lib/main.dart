@@ -5,7 +5,7 @@ import 'package:flutter_application_7/api/invoice.dart';
 import 'package:flutter_application_7/api/sanpham.dart';
 import 'package:flutter_application_7/constants.dart';
 import 'package:flutter_application_7/screens/welcome/welcome_screen.dart';
-
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_application_7/screens/login_register/login/login_screen.dart';
 
 import 'package:provider/provider.dart';
@@ -29,12 +29,28 @@ void main() {
       )
     ],
     child: const MyApp(),
+    
   ));
+  configLoading();
 }
 
-class CartaccountReQuest {}
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = Colors.yellow
+    ..backgroundColor = Colors.green
+    ..indicatorColor = Colors.yellow
+    ..textColor = Colors.yellow
+    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..userInteractions = true
+    ..dismissOnTap = false;
+    //..customAnimation = CustomAnimation();
+}
 
-class CartShopReQuest {}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -49,6 +65,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: WelcomeScreeen(),
+        builder: EasyLoading.init(),
     );
   }
 }

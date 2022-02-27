@@ -25,12 +25,27 @@ class _BodyTKState extends State<BodyTK> {
   @override
   Widget build(BuildContext context) {
     var Accountapi = Provider.of<AccountReQuest>(context, listen: false);
-
+    
     void takephoto() async {
-      final _pickFile = await _picker.getImage(source: ImageSource.gallery);
-      setState(() {
-        _imageFile = _pickFile!;
-      });
+      final _imageFile = await _picker.getImage(source: ImageSource.gallery);
+      print( _imageFile!.path);
+      Map<String, String> data = {
+                          "_accountId":widget.account[0].id.toString(),              
+                        };
+                        var res = await Accountapi.postdata(
+                          data,
+                            _imageFile == null ? null : _imageFile);
+                        if (res == "Thành công") {
+                          
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      TTTKScreen(account: widget.account)));
+                        } else {
+                          print("Thất bại");
+                        }
+      
     }
 
     return ListView(
@@ -60,22 +75,7 @@ class _BodyTKState extends State<BodyTK> {
                     child: InkWell(
                       onTap: () async {
                         takephoto();
-                        Map<String, String> data = {
-                          "accountId":widget.account[0].id.toString(),
-                          
-                        };
-                        var res = await Accountapi.postdata(
-                          data,
-                            _imageFile == null ? null : _imageFile);
-                        if (res == "Thành công") {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      TTTKScreen(account: widget.account)));
-                        } else {
-                          print("Thất bại");
-                        }
+                        
                       },
                       child: Icon(
                         Icons.camera_alt,

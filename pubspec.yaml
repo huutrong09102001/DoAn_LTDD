@@ -41,6 +41,7 @@ dependencies:
   fluttertoast: ^8.0.8
   image_picker: ^0.8.4+9
   http_parser: ^4.0.0
+  flutter_easyloading: ^3.0.3
 
 dev_dependencies:
   flutter_test:
