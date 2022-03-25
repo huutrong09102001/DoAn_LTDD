@@ -30,7 +30,7 @@ class AccountReQuest extends ChangeNotifier {
       EasyLoading.dismiss();
       return acc;
     } else {
-      print(response.body);
+      
       throw Exception("Fail");
     }
   }

@@ -11,51 +11,46 @@ import 'package:provider/provider.dart';
 
 class DHCTScreen extends StatefulWidget {
   final List<Account> account;
+  final List<Invoice> invoices;
 
-  const DHCTScreen({Key? key, required this.account}) : super(key: key);
+  const DHCTScreen({Key? key, required this.account, required this.invoices})
+      : super(key: key);
 
   @override
   _DHCTScreenState createState() => _DHCTScreenState();
 }
-  class _DHCTScreenState extends State<DHCTScreen> {
+
+class _DHCTScreenState extends State<DHCTScreen> {
   @override
   Widget build(BuildContext context) {
     var invoiceapi = Provider.of<InvoiceReQuest>(context, listen: false);
-    Map<String, String> data = {
-      '_accountId': widget.account[0].id.toString(),
-    };
-    invoiceapi.getInvoiceListByAccountId(data);
-    List<Invoice> ListInvoice = invoiceapi.invoices;
-    
-    
-    print(widget.account[0].id);
-    print(ListInvoice.length);
+
+    List<Invoice> ListInvoice = widget.invoices;
+
     List<Invoice> listInvoiceBy0 = [];
     List<Invoice> listInvoiceBy1 = [];
     List<Invoice> listInvoiceBy2 = [];
     List<Invoice> listInvoiceBy3 = [];
-   
-    for (var item in ListInvoice) {
-       if(item.status == 0)
-       {
-       listInvoiceBy0.add(item);     
-       }
-       if(item.status == 1)
-       {
-         listInvoiceBy1.add(item);
-       }
-       if(item.status == 2)
-       {
-         listInvoiceBy2.add(item);
-       } 
-       if(item.status == 4)
-       {
-         listInvoiceBy3.add(item);
-       } 
-    }
-    
+    List<Invoice> listInvoiceBy4 = [];
 
-    
+    for (var item in ListInvoice) {
+      if (item.status == 0) {
+        listInvoiceBy0.add(item);
+      }
+      if (item.status == 1) {
+        listInvoiceBy1.add(item);
+      }
+      if (item.status == 2) {
+        listInvoiceBy2.add(item);
+      }
+      if (item.status == 3) {
+        listInvoiceBy3.add(item);
+      }
+      if (item.status == 4) {
+        listInvoiceBy4.add(item);
+      }
+    }
+
     return DefaultTabController(
       length: 5,
       child: Scaffold(
@@ -63,28 +58,22 @@ class DHCTScreen extends StatefulWidget {
         appBar: buildAppBar(),
         body: backgrountInvoiceScreen(
             TabBarView(children: [
-              FutureBuilder(
-                future: invoiceapi.getInvoiceListByAccountId(data),
-                builder: (context, AsyncSnapshot snapshot){
-                    return ListView(children: [
+              ListView(children: [
                 for (var item in listInvoiceBy0)
                   Column(
                     children: [
-                     invoice('Hủy đơn', context, item ,widget.account),
+                      invoice('Hủy đơn', context, item, widget.account),
                       SizedBox(
                         height: 15,
                       ),
                     ],
                   )
-              ]);
-                }
-              ),
-              
+              ]),
               ListView(children: [
                 for (var item in listInvoiceBy1)
                   Column(
                     children: [
-                     invoice('Hủy đơn', context , item , widget.account),
+                      invoice('Hủy đơn', context, item, widget.account),
                       SizedBox(
                         height: 15,
                       ),
@@ -92,10 +81,10 @@ class DHCTScreen extends StatefulWidget {
                   )
               ]),
               ListView(children: [
-               for (var item in listInvoiceBy2)
+                for (var item in listInvoiceBy2)
                   Column(
                     children: [
-                     invoice('Hủy đơn', context,item ,widget.account),
+                      invoice('Hủy đơn', context, item, widget.account),
                       SizedBox(
                         height: 15,
                       ),
@@ -103,10 +92,10 @@ class DHCTScreen extends StatefulWidget {
                   )
               ]),
               ListView(children: [
-               for (var item in listInvoiceBy3)
+                for (var item in listInvoiceBy3)
                   Column(
                     children: [
-                     invoice('Đánh giá', context , item , widget.account),
+                      invoice('Đánh giá', context, item, widget.account),
                       SizedBox(
                         height: 15,
                       ),
@@ -114,10 +103,10 @@ class DHCTScreen extends StatefulWidget {
                   )
               ]),
               ListView(children: [
-                for (var item in listInvoiceBy0)
+                for (var item in listInvoiceBy4)
                   Column(
                     children: [
-                     invoice('Mua lại', context , item , widget.account),
+                      invoice('Mua lại', context, item, widget.account),
                       SizedBox(
                         height: 15,
                       ),
@@ -128,9 +117,7 @@ class DHCTScreen extends StatefulWidget {
             context),
       ),
     );
-    
   }
-
 }
 
 AppBar buildAppBar() {
@@ -179,17 +166,21 @@ Widget backgrountInvoiceScreen(TabBarView lb, context) {
       ));
 }
 
-
-
-Widget invoice(String button, BuildContext context, Invoice invoice , List<Account> acc) {
+Widget invoice(
+    String button, BuildContext context, Invoice invoice, List<Account> acc) {
   return InkWell(
     onTap: () {
       var invoiceapi = Provider.of<InvoiceReQuest>(context, listen: false);
-    Map<String, String> data = {
-      '_invoiceId': invoice.id.toString(),
-    };
-    invoiceapi.getInvoiceDetail(data).whenComplete(() => Navigator.push(context, MaterialPageRoute(builder: (context)=>InvoiceDetailScreen(invoiceId: invoice.id,account:acc ,))));
-      
+      Map<String, String> data = {
+        '_invoiceId': invoice.id.toString(),
+      };
+      invoiceapi.getInvoiceDetail(data).whenComplete(() => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => InvoiceDetailScreen(
+                    invoiceId: invoice.id,
+                    account: acc,
+                  ))));
     },
     child: Container(
       decoration: BoxDecoration(
@@ -200,7 +191,6 @@ Widget invoice(String button, BuildContext context, Invoice invoice , List<Accou
           height: 10,
         ),
         Row(children: [
-          
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -215,8 +205,6 @@ Widget invoice(String button, BuildContext context, Invoice invoice , List<Accou
                   style: TextStyle(fontSize: 20),
                 ),
               ),
-              
-              
             ],
           )
         ]),
@@ -231,11 +219,11 @@ Widget invoice(String button, BuildContext context, Invoice invoice , List<Accou
             children: [
               Expanded(
                 child: Text(
-                invoice.date.toString(),
-                style: TextStyle(
-                  fontSize: 20,
+                  invoice.date.toString(),
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
                 ),
-              ),
               ),
               Expanded(
                 child: Text(
@@ -263,7 +251,51 @@ Widget invoice(String button, BuildContext context, Invoice invoice , List<Accou
                 fontWeight: FontWeight.w600,
               ),
             ),
-            onPressed: () => print('aaaaaa'),
+            onPressed: () async {
+              if (button == 'Hủy đơn') {
+                Map<String, String> data5 = {
+                  '_invoiceId': invoice.id.toString(),
+                };
+                bool check = await InvoiceReQuest.detroyInvoice(data5);
+                if (check == true) {
+                  var invoiceapi =
+                      Provider.of<InvoiceReQuest>(context, listen: false);
+                  Map<String, String> data = {
+                    '_accountId': acc[0].id.toString(),
+                  };
+                  List<Invoice> invoiceListByAPI =
+                      await invoiceapi.getInvoiceListByAccountId(data);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          DHCTScreen(account: acc, invoices: invoiceListByAPI),
+                    ),
+                  );
+                }
+              } else {
+                Map<String, String> data5 = {
+                  '_invoiceId': invoice.id.toString(),
+                };
+                bool check = await InvoiceReQuest.repuchaseInvoice(data5);
+                if (check == true) {
+                  var invoiceapi =
+                      Provider.of<InvoiceReQuest>(context, listen: false);
+                  Map<String, String> data = {
+                    '_accountId': acc[0].id.toString(),
+                  };
+                  List<Invoice> invoiceListByAPI =
+                      await invoiceapi.getInvoiceListByAccountId(data);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          DHCTScreen(account: acc, invoices: invoiceListByAPI),
+                    ),
+                  );
+                }
+              }
+            },
           ),
         ),
       ]),

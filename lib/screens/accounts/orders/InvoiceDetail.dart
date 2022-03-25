@@ -24,8 +24,7 @@ class InvoiceDetailScreen extends StatelessWidget {
     };
    /* invoiceapi.getInvoiceDetail(data); */
     List<InvoiceDetail> invoiceDetails = invoiceapi.invoiceDetails;
-    print(account[0].id);
-    print("so luong chi tiet : "+ invoiceDetails.length.toString());
+   
     for (var item in invoiceDetails) {
       subtotal = subtotal+ (item.quantity * item.price);
     }
@@ -39,7 +38,7 @@ class InvoiceDetailScreen extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        backgroundColor: Color(0xffe59191),
+        backgroundColor: kBackgroundColor,
       ),
       body: 
           ListView(

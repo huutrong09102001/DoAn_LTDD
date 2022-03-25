@@ -1,4 +1,6 @@
+import 'package:flutter_application_7/api/invoice.dart';
 import 'package:flutter_application_7/models/Account.dart';
+import 'package:flutter_application_7/models/Invoice.dart';
 import 'package:flutter_application_7/screens/accounts/user_info/TTTK.dart';
 import 'package:flutter_application_7/screens/accounts/orders/DHCT.dart';
 import 'package:flutter_application_7/screens/accounts/address/DCCT.dart';
@@ -60,11 +62,17 @@ class Body extends StatelessWidget {
         ),
         SizedBox(height: 40),
         InkWell(
-          onTap: () {
+          onTap: ()async {
+            var invoiceapi = Provider.of<InvoiceReQuest>(context, listen: false);
+          Map<String, String> data = {
+          '_accountId': account[0].id.toString(),
+           };
+            List<Invoice> invoiceListByAPI =await  invoiceapi.getInvoiceListByAccountId(data);
             Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => DHCTScreen(
+                    invoices: invoiceListByAPI,
                     account: account,
                   ),
                 ));

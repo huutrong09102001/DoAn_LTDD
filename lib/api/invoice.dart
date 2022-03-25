@@ -18,30 +18,7 @@ static List<Invoice> parseInvoice(String response) {
   List<InvoiceDetail> invoiceDetails = [];
   
 
- static Future<List<Cart>> getCartList (var data  ) async {
-  List<Cart> acc = [];
-  String url = host + "account/login";
-   var response = await http.post(Uri.parse(url),
-   headers: _setHeader(),
-   body: jsonEncode(data));
-   if(response.statusCode == 200)
-   {
-     dynamic jsondata = json.decode(response.body);
-     dynamic data = jsondata["data"];
-
-     data.forEach((i){
-       acc.add(Cart.fromJson(i));
-     });
-    
-     return acc;
-   }
-   else
-   {
-     print(response.body);
-     throw Exception("Fail");
-   }
-  
-}
+ 
 
 
 
@@ -84,6 +61,33 @@ static Future<String> getInvoiceId (var data)async{
     
    } 
 }
+
+static Future<bool> detroyInvoice (var data)async{
+  
+  var url = host + "invoice/huyDonHang";
+   http.Response response = await  http.post(Uri.parse(url),
+   headers: _setHeader(),
+   body: jsonEncode(data));
+   if (response.statusCode == 200) { 
+    return true;
+   } else {
+     throw Exception('khong thanh cong');
+    
+   } 
+}
+static Future<bool> repuchaseInvoice (var data)async{
+  
+  var url = host + "invoice/mualaiDonHang";
+   http.Response response = await  http.post(Uri.parse(url),
+   headers: _setHeader(),
+   body: jsonEncode(data));
+   if (response.statusCode == 200) { 
+    return true;
+   } else {
+     throw Exception('khong thanh cong');
+    
+   } 
+}
 static Future<void> addInvoiceDetail (var data) async {
   print(data);
   var url = host + "invoiceDetail/newInvoiceDetail";
@@ -99,7 +103,7 @@ static Future<void> addInvoiceDetail (var data) async {
    } 
 }
 
- Future<void> getInvoiceListByAccountId (var data) async {
+ Future<List<Invoice>> getInvoiceListByAccountId (var data) async {
   List<Invoice> invoices1 = [];
   var url = host + "invoice/getListInvoiceByAccountId";
    http.Response response = await  http.post(Uri.parse(url),
@@ -113,14 +117,12 @@ static Future<void> addInvoiceDetail (var data) async {
      data.forEach((i){
         invoices1.add(Invoice.fromJson(i));
      });
-   
+    return invoices1;
    } else {
      throw Exception('khong thanh cong');
     
    } 
-    invoices = invoices1;
-    print(invoices.length);
-      notifyListeners();
+   
 }
 
  Future<void> getInvoiceDetail (var data  ) async {
